@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     ingest_sources: str = "india_curated,oem_pages"
 
     # Polite crawling settings for any source that fetches web pages.
-    http_user_agent: str = "KilowiseBot/0.1 (+https://evplatform-production.up.railway.app/#/about)"
+    http_user_agent: str = "RangewiseBot/0.1 (+https://evplatform-production.up.railway.app/#/about)"
     http_timeout_seconds: float = 30.0
     crawl_delay_seconds: float = 5.0  # minimum gap between requests to the same host
 
