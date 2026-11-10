@@ -1,4 +1,4 @@
-# Kilowise
+# Rangewise
 
 Every EV in India, honestly compared. Brand and design notes are in [BRAND.md](BRAND.md).
 
@@ -39,7 +39,7 @@ Known caveats:
 
 ## Web app
 
-Open the service's main URL (`/`) for Kilowise:
+Open the service's main URL (`/`) for Rangewise:
 
 * **Explore**: every EV as a card with real-world range, battery and running cost per km. One-tap
   chips for budget, body type, 7 seats, real-world range and fast charging; search with `/`.

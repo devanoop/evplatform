@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kilowise · Every EV in India, honestly compared</title>
-<meta name="description" content="Kilowise: every electric car on sale in India with real-world range, running costs and sources. No ads, no spam calls, no phone number needed.">
+<title>Rangewise · Every EV in India, honestly compared</title>
+<meta name="description" content="Rangewise: every electric car on sale in India with real-world range, running costs and sources. No ads, no spam calls, no phone number needed.">
 <meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
-<meta property="og:title" content="Kilowise · Every EV in India, honestly compared">
+<meta property="og:title" content="Rangewise · Every EV in India, honestly compared">
 <meta property="og:description" content="Real-world range, running cost and a 30-second EV match. No ads, no spam calls.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%237df9c2'/><path d='M11 8v16M21.5 8 14 16l7.5 8' stroke='%230b0c0e' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%237df9c2'/><path d='M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11m6.5 0 5 7' stroke='%230b0c0e' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Kilowise design tokens. Dark is the signature look; light follows the system setting. */
+/* Rangewise design tokens. Dark is the signature look; light follows the system setting. */
 :root{
   --bg:#0b0c0e; --surface:#141619; --surface-2:#1b1e22; --line:#272b31; --line-strong:#383d45;
   --text:#f2f0ea; --muted:#9a9ea6; --faint:#6b7079;
@@ -274,9 +274,9 @@ footer p{margin:6px 0}
 <body>
 <header class="bar" id="bar">
   <div class="wrap">
-    <a class="brand" href="#/" aria-label="Kilowise home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 8v16M21.5 8 14 16l7.5 8" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>kilo<b>wise</b></span>
+    <a class="brand" href="#/" aria-label="Rangewise home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11m6.5 0 5 7" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>range<b>wise</b></span>
     </a>
     <nav class="nav">
       <a href="#/" data-nav="home">Explore</a>
@@ -297,7 +297,7 @@ footer p{margin:6px 0}
 <footer>
   <div class="wrap">
     <div>
-      <a class="brand" href="#/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 8v16M21.5 8 14 16l7.5 8" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>kilo<b>wise</b></span></a>
+      <a class="brand" href="#/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11m6.5 0 5 7" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>range<b>wise</b></span></a>
       <p style="margin-top:14px">Every electric car on sale in India, compared on the numbers that matter when you actually own one.</p>
       <p>No ads. No spam calls. We never ask for your phone number.</p>
     </div>
@@ -624,7 +624,7 @@ function renderCar(key, slug){
   const v = m.vers.find(x => x.slug === slug) || m.vers[0];
   const real = realRange(v), ch = chargeMinutes(v), cpk = costPerKm(v);
   const on = picked.includes(v.slug);
-  document.title = `${m.make} ${m.model} · Kilowise`;
+  document.title = `${m.make} ${m.model} · Rangewise`;
   const row = (k, val) => val ? `<tr><th>${k}</th><td>${val}</td></tr>` : "";
   const notes = [v.price_note, v.extra?.note].filter(Boolean);
   app.innerHTML = `
@@ -717,7 +717,7 @@ function bindCalc(v){
 
 /* ---------- compare ---------- */
 function renderCompare(slugs){
-  document.title = "Compare · Kilowise";
+  document.title = "Compare · Rangewise";
   slugs = (slugs || []).filter(s => BY_SLUG.has(s)).slice(0, 4);
   if (slugs.join(",") !== picked.join(",") && location.hash.startsWith("#/compare/")) { picked = [...slugs]; store.set("compare", picked); }
   const vs = slugs.map(s => BY_SLUG.get(s));
@@ -803,7 +803,7 @@ const QUESTIONS = [
 ];
 let ans = store.get("answers", {}), step = 0;
 function renderMatch(){
-  document.title = "Find my EV · Kilowise";
+  document.title = "Find my EV · Rangewise";
   if (step >= QUESTIONS.length) return renderResults();
   const Q = QUESTIONS[step];
   app.innerHTML = `<div class="match">
@@ -897,13 +897,13 @@ function resultHTML(r, i){
 
 /* ---------- about our data ---------- */
 function renderAbout(){
-  document.title = "About our data · Kilowise";
+  document.title = "About our data · Rangewise";
   const photos = [...PHOTOS.values()];
   const std = Object.entries(REAL).filter(([k]) => k !== "EPA").sort((a, b) => a[1] - b[1]);
   app.innerHTML = `<div class="about fade-in">
     <a class="back" href="#/">← All cars</a>
     <h2>About our data</h2>
-    <p>Kilowise covers every electric car on sale in India. We take specs and prices from public sources (carmaker announcements and Indian motoring sites), keep a link to the source of every number, and check them by hand. Each car page lists its sources under “Where these numbers come from”. If two sources disagree and neither names a test, we leave the figure blank rather than guess.</p>
+    <p>Rangewise covers every electric car on sale in India. We take specs and prices from public sources (carmaker announcements and Indian motoring sites), keep a link to the source of every number, and check them by hand. Each car page lists its sources under “Where these numbers come from”. If two sources disagree and neither names a test, we leave the figure blank rather than guess.</p>
     <h3>Real-world range</h3>
     <p>Official range depends on which test was used, and Indian city-cycle tests are optimistic. We multiply the claimed range by a factor for its test to estimate mixed driving with the AC on:</p>
     <table><tr><th>Test</th><th>Factor</th></tr>${std.map(([k, f]) => `<tr><td>${esc({claimed: "No test named", "claimed real-world": "Maker's real-world figure", C75: "Tata C75"}[k] || k)}</td><td>× ${f.toFixed(2)}</td></tr>`).join("")}</table>

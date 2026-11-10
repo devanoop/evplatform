@@ -1,16 +1,18 @@
-# Kilowise brand and product design
+# Rangewise brand and product design
 
 ## Name
 
-**Kilowise** (recommended, not final). *Kilo* is in the two numbers every EV buyer cares about,
-kWh and km. *Wise* says what we do differently: honest, independent advice rather than lead
-selling. It is easy to say in English and Hindi, easy to spell, and works as a verb ("kilowise it").
+**Rangewise**, chosen by Anoop on 2026-11-10. It names the thing EV buyers worry about most,
+range, and promises sensible, honest advice about it. Plain English, easy to spell and to search.
+The site launched as "Kilowise"; only the name and logo letter changed, the colours stayed.
 
 Conflict check (web search, 2026-11-10; not a trademark search):
 
 | Name | Verdict |
 |---|---|
-| Kilowise | No Indian auto or EV brand found. Nearest is Kilows, a US charging network. **Recommended.** Check the trademark (class 35/42) and the domain before launch. |
+| Rangewise | **Chosen.** No Indian auto or EV brand found; nearest is RangeMate EV, a small range app. Check the trademark (class 35/42) and the domain before launch. |
+| Kilowise | First working name. No conflict found (nearest: Kilows, a US charging network). |
+| Viveka, Ekdum, Sahaj | Offered as alternatives; no auto conflicts found. |
 | Chalega | Hindi for "will it work?", which is the buyer's real question. No conflict found, but sounds close to Chalo (bus app). Good as a campaign line: "Kya EV chalega?" |
 | Hum | EVs hum; Hindi for "we". Short and warm, but hard to search and clashes with HUM TV. |
 | Bijli | Rejected: Bijliride (EV rentals) and Altigreen's "Bijli Hoon Main" campaign. |
@@ -25,7 +27,7 @@ Tagline: **Every EV in India. Honestly compared.**
 ## Where CarWale and CarDekho fall short for an EV buyer
 
 1. **Lead capture first.** "Get offers", "Check on-road price" and EMI widgets ask for a phone
-   number, which brings dealer calls. Kilowise never asks for one.
+   number, which brings dealer calls. Rangewise never asks for one.
 2. **Ads and sponsored placements** compete with the content. We show none, and no brand pays to rank.
 3. **Built for petrol cars.** EVs get the same template, so the numbers that matter (real range,
    charge time, running cost) are buried or missing.
@@ -57,5 +59,5 @@ Tagline: **Every EV in India. Honestly compared.**
 | Highlight ("gold") | `#e8c77b` | `#a87a12` |
 
 * Type: **Sora** for display and numbers, **Inter** for text (Google Fonts, system fallback).
-* Logo: a rounded mint square with a "K" whose arms meet at a point, like a charge connector.
+* Logo: a rounded mint square with a line-drawn "R".
 * Car art: simple original side profiles per body type, tinted per brand. No manufacturer photos.
