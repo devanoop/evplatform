@@ -1,0 +1,18 @@
+# Local stack: Postgres + API. Run ingestion with:
+#   docker compose run --rm api python -m ev_platform.cli ingest
+services:
+  db:
+    image: postgres:16
+    environment: { POSTGRES_USER: ev, POSTGRES_PASSWORD: ev, POSTGRES_DB: ev }
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://ev:ev@db:5432/ev
+      ADMIN_TOKEN: dev-token
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports: ["8000:8000"]
+    depends_on: [db]
+volumes:
+  pgdata:

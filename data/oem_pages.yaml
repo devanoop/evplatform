@@ -1,0 +1,37 @@
+# Official manufacturer spec pages the oem_pages source may fetch.
+#
+# Before enabling an entry:
+#   1. Read the site's terms of use. Skip the site if they forbid automated access or reuse.
+#   2. Check robots.txt (the fetcher also enforces it on every run).
+#   3. Fill in terms_checked_on and terms_note, then set enabled: true.
+#
+# The variant names Claude returns must line up with india_curated.yaml for the values to
+# merge onto the same rows; otherwise they appear as separate IN variants for review.
+#
+# The URLs below are starting points: confirm each one still resolves to the spec page.
+# All entries start disabled: none of these sites' terms had been reviewed when this was written.
+
+pages:
+  - make: Tata
+    model: Nexon EV
+    market: IN
+    url: https://ev.tatamotors.com/nexon/ev/specifications.html
+    enabled: false
+    terms_checked_on: null
+    terms_note: null
+
+  - make: Mahindra
+    model: BE 6
+    market: IN
+    url: https://www.mahindraelectricsuv.com/be6/specifications
+    enabled: false
+    terms_checked_on: null
+    terms_note: null
+
+  - make: MG
+    model: Windsor EV
+    market: IN
+    url: https://www.mgmotor.co.in/vehicles/windsor-ev-electric-car-in-india
+    enabled: false
+    terms_checked_on: null
+    terms_note: null
