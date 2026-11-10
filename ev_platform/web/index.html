@@ -1,262 +1,884 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EV Finder India</title>
-<meta name="description" content="Every electric car on sale in India: specs, range, charging and prices, with sources.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%230f9d58' d='M13 2 4 14h7l-1 8 9-12h-7z'/></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kilowise · Every EV in India, honestly compared</title>
+<meta name="description" content="Kilowise: every electric car on sale in India with real-world range, running costs and sources. No ads, no spam calls, no phone number needed.">
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Kilowise · Every EV in India, honestly compared">
+<meta property="og:description" content="Real-world range, running cost and a 30-second EV match. No ads, no spam calls.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%237df9c2'/><path d='M11 8v16M21.5 8 14 16l7.5 8' stroke='%230b0c0e' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* Kilowise design tokens. Dark is the signature look; light follows the system setting. */
 :root{
-  --bg:#f6f7f9; --card:#fff; --text:#16181d; --muted:#5f6672; --line:#e3e6eb;
-  --accent:#0f8a4f; --accent-soft:#e6f4ec; --warn:#9a6700; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+  --bg:#0b0c0e; --surface:#141619; --surface-2:#1b1e22; --line:#272b31; --line-strong:#383d45;
+  --text:#f2f0ea; --muted:#9a9ea6; --faint:#6b7079;
+  --accent:#7df9c2; --accent-ink:#04291a; --accent-soft:rgba(125,249,194,.12);
+  --gold:#e8c77b; --gold-soft:rgba(232,199,123,.13); --warn:#f4a26b; --warn-soft:rgba(244,162,107,.12);
+  --shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(0,0,0,.8);
+  --radius:20px; --radius-sm:12px;
+  --display:"Sora",ui-sans-serif,system-ui,sans-serif; --body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){
-  :root{--bg:#0f1115; --card:#181b21; --text:#e9ecf1; --muted:#9aa3b2; --line:#2a2f38;
-        --accent:#3cc47f; --accent-soft:#16301f; --warn:#e3b341; --shadow:none}
+@media (prefers-color-scheme: light){
+  :root{--bg:#f6f4ef; --surface:#ffffff; --surface-2:#efece5; --line:#e3dfd6; --line-strong:#cfcabf;
+        --text:#121417; --muted:#5d6169; --faint:#8a8e95;
+        --accent:#0b9e6a; --accent-ink:#ffffff; --accent-soft:rgba(11,158,106,.10);
+        --gold:#a87a12; --gold-soft:rgba(168,122,18,.10); --warn:#b85a1c; --warn-soft:rgba(184,90,28,.09);
+        --shadow:0 1px 2px rgba(20,20,20,.04), 0 18px 36px -24px rgba(20,20,20,.25); color-scheme:light}
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--accent)}
-header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-.top{display:flex;align-items:center;gap:12px;padding:12px 0}
-.logo{font-weight:700;font-size:18px;display:flex;align-items:center;gap:6px}
-.logo svg{width:20px;height:20px;fill:var(--accent)}
-.top .count{color:var(--muted);font-size:13px;margin-left:auto}
-.filters{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:8px;padding:0 0 12px}
-.filters label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px}
-input,select,button{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
-button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-main{padding:16px 0 120px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
-.card h3{margin:0;font-size:16px}
-.card .make{color:var(--muted);font-size:13px}
-.price{font-weight:650}
-.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-right:4px}
-.versions{display:flex;flex-direction:column;gap:6px}
-.ver{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--bg)}
-.ver:hover{border-color:var(--accent)}
-.ver .nm{font-size:13px;font-weight:600}
-.ver .sp{font-size:12px;color:var(--muted)}
-.ver input{width:18px;height:18px;margin:0;accent-color:var(--accent)}
-.empty{color:var(--muted);text-align:center;padding:40px}
-.cmpbar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 0;display:none;z-index:6}
-.cmpbar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.chip{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;background:var(--bg)}
-dialog{border:none;border-radius:14px;padding:0;max-width:min(920px,calc(100vw - 32px));width:100%;background:var(--card);color:var(--text)}
-dialog::backdrop{background:rgba(0,0,0,.45)}
-.dlg{padding:18px;max-height:85vh;overflow:auto}
-.dlg h2{margin:0 0 2px}
-.close{float:right}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-weight:500;width:38%}
-.cmp th{width:auto;min-width:130px}
-.note{background:var(--accent-soft);border-radius:8px;padding:10px;font-size:13px;margin:10px 0}
-.src{font-size:13px;color:var(--muted)}
-.muted{color:var(--muted)}
-footer{color:var(--muted);font-size:12px;text-align:center;padding:24px 16px}
-@media (max-width:820px){header{position:static}.filters{grid-template-columns:1fr 1fr}.filters .q{grid-column:1/-1}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.muted{color:var(--muted)} .faint{color:var(--faint)}
+.hidden{display:none!important}
+
+/* Top bar */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.bar.scrolled{border-bottom-color:var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 20px/1 var(--display);letter-spacing:-.02em}
+.brand svg{width:30px;height:30px;flex:none}
+.brand b{color:var(--accent);font-weight:700}
+.nav{margin-left:auto;display:flex;gap:4px}
+.nav a{text-decoration:none;color:var(--muted);font-weight:500;padding:8px 12px;border-radius:99px;font-size:14px}
+.nav a:hover,.nav a.on{color:var(--text);background:var(--surface-2)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--text);padding:12px 18px;border-radius:99px;font-weight:600;text-decoration:none;transition:transform .15s,background .15s,border-color .15s;white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:8px 14px;font-size:13px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.iconbtn{width:40px;height:40px;border-radius:99px;border:1px solid var(--line);background:var(--surface);display:inline-grid;place-items:center}
+
+/* Hero */
+.hero{padding:56px 0 28px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:99px}
+.eyebrow i{width:6px;height:6px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;margin:0}
+.hero h1{font-size:clamp(36px,6.4vw,72px);line-height:1.02;font-weight:800;margin:18px 0 16px;max-width:14ch}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lede{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:56ch;margin:0 0 28px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap}
+.promise{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:40px}
+.promise div{background:var(--surface);padding:18px 20px}
+.promise b{display:block;font:700 26px/1.1 var(--display);letter-spacing:-.02em}
+.promise span{color:var(--muted);font-size:13px}
+
+/* Browse */
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:36px 0 16px;flex-wrap:wrap}
+.section-head h2{font-size:clamp(24px,3vw,32px);font-weight:700}
+.search{position:relative;margin-bottom:12px}
+.search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px 16px 48px;font-size:16px;transition:border-color .15s}
+.search input:focus{outline:none;border-color:var(--accent)}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:var(--muted)}
+.search kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);font:12px var(--body);color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:8px 14px;border-radius:99px;font-size:13px;font-weight:500;transition:all .15s}
+.chip:hover{color:var(--text);border-color:var(--line-strong)}
+.chip.on{background:var(--text);border-color:var(--text);color:var(--bg)}
+.chip-sep{flex:none;width:1px;background:var(--line);margin:4px 2px}
+.toolbar{display:flex;align-items:center;gap:10px;margin:6px 0 18px;flex-wrap:wrap}
+.toolbar .count{font-weight:600}
+.toolbar .spacer{flex:1}
+.select{appearance:none;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9ea6' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--line);border-radius:99px;padding:8px 32px 8px 14px;font-size:13px;font-weight:500}
+.linkbtn{background:none;border:none;color:var(--accent);font-weight:600;font-size:13px;padding:4px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .2s cubic-bezier(.2,.8,.2,1),border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--line-strong)}
+.card .stretch{text-decoration:none}
+.card .stretch::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--radius)}
+.card:focus-within{border-color:var(--accent)}
+.card .art{height:132px;display:grid;place-items:center;position:relative}
+.card .art svg{width:82%;max-width:250px}
+.card .body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .make{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.card h3{font-size:20px;font-weight:700}
+.card .price{font-weight:600}
+.card .price small{color:var(--muted);font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:auto}
+.stat{background:var(--surface-2);border-radius:var(--radius-sm);padding:8px 10px}
+.stat b{display:block;font:700 16px/1.2 var(--display)}
+.stat span{font-size:11px;color:var(--muted)}
+.card .cmp{position:absolute;top:12px;right:12px;z-index:2}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.pill.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.pill.badge{position:absolute;top:12px;left:12px;background:var(--gold-soft);color:var(--gold);border-color:transparent}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
+.skeleton{height:300px;border-radius:var(--radius);background:linear-gradient(90deg,var(--surface) 0%,var(--surface-2) 50%,var(--surface) 100%);background-size:200% 100%;animation:sh 1.4s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+
+/* Generic panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.panel h3{font-size:18px;margin-bottom:12px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-weight:500;margin:24px 0 8px;font-size:14px}
+.back:hover{color:var(--text)}
+
+/* Car page */
+.car-hero{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;margin:8px 0 24px}
+.car-hero .art{border-radius:28px;height:300px;display:grid;place-items:center;border:1px solid var(--line)}
+.car-hero .art svg{width:86%}
+.car-hero h1{font-size:clamp(32px,5vw,54px);font-weight:800;line-height:1.05;margin:6px 0 10px}
+.car-hero .price{font:600 22px/1.3 var(--display)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{border-color:var(--accent);color:var(--text);box-shadow:inset 0 0 0 1px var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.tile .k{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px}
+.tile .v{font:700 30px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 2px}
+.tile .v small{font-size:15px;font-weight:600;color:var(--muted)}
+.tile .s{font-size:12px;color:var(--muted)}
+.tile.hl{background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.tile.hl .v{color:var(--accent)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.specs{width:100%;border-collapse:collapse;font-size:14px}
+.specs th,.specs td{text-align:left;padding:11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.specs tr:last-child th,.specs tr:last-child td{border-bottom:none}
+.specs th{color:var(--muted);font-weight:500;width:44%;padding-right:12px}
+.note{border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;margin-top:12px;background:var(--warn-soft);color:var(--text)}
+.note b{color:var(--warn)}
+.info{font-size:12px;color:var(--muted);line-height:1.5}
+.tip{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:99px;border:1px solid var(--line-strong);font-size:10px;color:var(--muted);cursor:help;font-weight:700}
+.sources a{color:var(--accent);text-decoration:none;font-weight:500}
+.sources a:hover{text-decoration:underline}
+
+/* Calculator */
+.calc label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:14px 0 8px}
+.calc label b{color:var(--text)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.calc .inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.calc .inputs label{flex-direction:column;margin:0;gap:4px;font-size:11px}
+.calc .inputs input{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;font-size:14px}
+.save{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.save div{background:var(--surface-2);border-radius:var(--radius-sm);padding:12px 14px}
+.save b{display:block;font:700 22px/1.2 var(--display)}
+.save .big{grid-column:1/-1;background:var(--accent-soft)}
+.save .big b{color:var(--accent);font-size:28px}
+.save span{font-size:12px;color:var(--muted)}
+
+/* Compare */
+.cmp-wrap{overflow-x:auto;margin:0 -20px;padding:0 20px 8px}
+.cmp-table{border-collapse:separate;border-spacing:0;min-width:100%}
+.cmp-table th,.cmp-table td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;min-width:180px;font-size:14px}
+.cmp-table thead th{position:sticky;top:64px;background:var(--bg);z-index:2;border-bottom:1px solid var(--line-strong)}
+.cmp-table tbody th{color:var(--muted);font-weight:500;min-width:150px;position:sticky;left:0;background:var(--bg);z-index:1}
+.cmp-table tr.grp th{color:var(--text);font:600 13px var(--display);text-transform:uppercase;letter-spacing:.08em;padding-top:24px;border-bottom:none}
+.cmp-table tr.grp td{border-bottom:none}
+.cmp-table .head-art{height:70px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px}
+.cmp-table .head-art svg{width:80%}
+.best{color:var(--accent);font-weight:700}
+.best::after{content:"Best";margin-left:8px;font:600 10px var(--body);letter-spacing:.06em;text-transform:uppercase;background:var(--accent-soft);padding:2px 7px;border-radius:99px;vertical-align:2px}
+.add-col{display:grid;gap:8px}
+
+/* Compare tray */
+.tray{position:fixed;left:50%;bottom:16px;transform:translate(-50%,140%);transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:30;width:min(720px,calc(100vw - 24px));background:var(--surface);border:1px solid var(--line-strong);border-radius:22px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 24px 60px -20px rgba(0,0,0,.6)}
+.tray:not(.show){visibility:hidden}
+.tray.show{transform:translate(-50%,0)}
+.tray .items{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none}
+.tray .it{flex:none;display:flex;align-items:center;gap:6px;background:var(--surface-2);border-radius:99px;padding:6px 6px 6px 12px;font-size:13px;font-weight:500}
+.tray .it button{border:none;background:var(--line);color:var(--muted);width:20px;height:20px;border-radius:99px;font-size:12px;line-height:1}
+.toast{position:fixed;left:50%;top:76px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;font-size:13px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* Match flow */
+.match{max-width:720px;margin:0 auto;padding:32px 0 60px}
+.progress{height:4px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin:8px 0 36px}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.q h2{font-size:clamp(28px,4.4vw,44px);font-weight:800;line-height:1.08;margin-bottom:10px}
+.q p{color:var(--muted);margin:0 0 26px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px;transition:all .15s}
+.opt:hover{border-color:var(--line-strong);transform:translateX(3px)}
+.opt.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt .ic{font-size:22px;width:28px;text-align:center}
+.opt b{display:block;font-size:16px}
+.opt span{font-size:13px;color:var(--muted)}
+.q-nav{display:flex;justify-content:space-between;margin-top:26px}
+.fade-in{animation:fi .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}}
+.result{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;margin-bottom:14px}
+.ring{--p:0;width:78px;height:78px;border-radius:99px;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--surface-2) 0)}
+.ring b{width:64px;height:64px;border-radius:99px;background:var(--surface);display:grid;place-items:center;font:800 20px var(--display)}
+.result h3{font-size:22px}
+.result ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px}
+.result li{display:flex;gap:8px}
+.result li::before{content:"✓";color:var(--accent);font-weight:700}
+.result li.c::before{content:"!";color:var(--warn)}
+.rank{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.result .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+/* Footer */
+footer{border-top:1px solid var(--line);margin-top:72px;padding:36px 0 120px;color:var(--muted);font-size:13px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+footer p{margin:6px 0}
+
+@media (max-width:900px){
+  .car-hero,.cols{grid-template-columns:1fr}
+  .car-hero .art{height:220px}
+  .tiles{grid-template-columns:1fr 1fr}
+  .promise{grid-template-columns:1fr 1fr}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .nav a.hide-sm{display:none}
+  .hero{padding-top:32px}
+  .tile .v{font-size:24px}
+  .search kbd{display:none}
+  .cmp-wrap{margin:0 -16px;padding:0 16px 8px}
+  .cmp-table th,.cmp-table td{min-width:150px}
+  .cmp-table tbody th{min-width:110px}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
+<header class="bar" id="bar">
   <div class="wrap">
-    <div class="top">
-      <div class="logo"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>EV Finder India</div>
-      <div class="count" id="count"></div>
-    </div>
-    <div class="filters">
-      <label class="q">Search<input id="q" type="search" placeholder="Nexon, Mahindra, 7 seater MPV..."></label>
-      <label>Brand<select id="make"><option value="">All brands</option></select></label>
-      <label>Body type<select id="body"><option value="">All types</option></select></label>
-      <label>Max price<select id="maxp">
-        <option value="">Any</option><option value="1000000">Up to Rs 10 L</option><option value="1500000">Up to Rs 15 L</option>
-        <option value="2000000">Up to Rs 20 L</option><option value="2500000">Up to Rs 25 L</option><option value="5000000">Up to Rs 50 L</option>
-        <option value="10000000">Up to Rs 1 Cr</option></select></label>
-      <label>Min range<select id="minr">
-        <option value="">Any</option><option value="250">250 km+</option><option value="350">350 km+</option>
-        <option value="450">450 km+</option><option value="550">550 km+</option><option value="650">650 km+</option></select></label>
-      <label>Sort<select id="sort">
-        <option value="price">Price: low to high</option><option value="-price">Price: high to low</option>
-        <option value="-range">Range: longest</option><option value="-battery">Battery: largest</option><option value="name">Name</option></select></label>
-    </div>
+    <a class="brand" href="#/" aria-label="Kilowise home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 8v16M21.5 8 14 16l7.5 8" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>kilo<b>wise</b></span>
+    </a>
+    <nav class="nav">
+      <a href="#/" data-nav="home">Explore</a>
+      <a href="#/match" data-nav="match">Find my EV</a>
+      <a href="#/compare" data-nav="compare" class="hide-sm">Compare</a>
+    </nav>
   </div>
 </header>
 
-<main class="wrap">
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" hidden>No cars match these filters.</div>
-</main>
+<main id="app" class="wrap"></main>
 
-<div class="cmpbar" id="cmpbar"><div class="wrap">
-  <strong>Compare:</strong><span id="cmpchips"></span>
-  <button class="primary" id="cmpgo">Compare</button><button id="cmpclear">Clear</button>
-</div></div>
+<div class="tray" id="tray" role="region" aria-label="Compare tray">
+  <div class="items" id="trayItems"></div>
+  <a class="btn primary sm" id="trayGo" href="#/compare">Compare</a>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<dialog id="dlg"><div class="dlg" id="dlgbody"></div></dialog>
-
-<footer>Specs compiled from public sources, linked on every car. Prices are ex-showroom and change often; check with the dealer.</footer>
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M11 8v16M21.5 8 14 16l7.5 8" stroke="var(--accent-ink)" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>kilo<b>wise</b></span></a>
+      <p style="margin-top:14px">Every electric car on sale in India, compared on the numbers that matter when you actually own one.</p>
+      <p>No ads. No spam calls. We never ask for your phone number.</p>
+    </div>
+    <div>
+      <p><b style="color:var(--text)">How we get the numbers</b></p>
+      <p>Specs come from public sources, linked on every car. Real-world range and running costs are our estimates, explained where they appear. Prices are ex-showroom and change often, so confirm with the dealer.</p>
+      <p><a href="docs">API</a></p>
+    </div>
+  </div>
+</footer>
 
 <script>
-const $ = s => document.querySelector(s);
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let ALL = [];
-const picked = new Map(); // slug -> label
+const app = $("#app");
 
-function money(x){
-  if (x == null) return "";
-  return x >= 1e7 ? `Rs ${(x/1e7).toFixed(2)} Cr` : `Rs ${(x/1e5).toFixed(2)} L`;
-}
+/* ---------- storage (best effort) ---------- */
+const store = {
+  get(k, d){ try { const v = localStorage.getItem("kw." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v){ try { localStorage.setItem("kw." + k, JSON.stringify(v)); } catch {} },
+};
+const prefs = Object.assign({daily: 40, tariff: 8, petrol: 105, kmpl: 15}, store.get("prefs", {}));
+
+/* ---------- formatting ---------- */
+const lakh = x => x >= 1e7 ? `₹${+(x/1e7).toFixed(2)} Cr` : `₹${+(x/1e5).toFixed(2)} L`;
+const rupees = x => "₹" + Math.round(x).toLocaleString("en-IN");
 function priceRange(lo, hi){
-  if (lo == null) return "Price not listed";
-  return hi && hi !== lo ? `${money(lo)} – ${money(hi)}` : money(lo);
+  if (lo == null) return "Price on request";
+  if (!hi || hi === lo) return lakh(lo);
+  if (lo >= 1e7 || hi < 1e7) return `${lakh(lo).replace(/ (L|Cr)$/, "")} – ${lakh(hi)}`;
+  return `${lakh(lo)} – ${lakh(hi)}`;
 }
-const num = (x, u) => x == null ? "" : `${+x.toFixed(1)} ${u}`;
-const ps = kw => kw == null ? "" : `${Math.round(kw)} kW (${Math.round(kw/0.7355)} PS)`;
+const n1 = x => +(+x).toFixed(1);
+const ps = kw => Math.round(kw / 0.7355);
+const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+/* ---------- EV maths ----------
+   Claimed range depends on the test. These factors turn each test into a typical
+   Indian mixed-use figure (AC on, some highway). They are estimates, and the UI says so. */
+const REAL = {"MIDC P1":0.68, "MIDC P1+P2":0.78, "MIDC":0.75, "ARAI":0.75, "C75":0.95, "claimed real-world":0.95,
+              "WLTP":0.85, "CLTC":0.70, "EPA":0.95, "claimed":0.75};
+const STD_INFO = {
+  "MIDC P1":"India's city-only test cycle, the most optimistic.",
+  "MIDC P1+P2":"India's city + highway test cycle.",
+  "MIDC":"India's standard certification cycle, mostly city driving.",
+  "ARAI":"Certified by ARAI on the MIDC cycle, mostly city driving.",
+  "C75":"Tata's own real-world figure, quoted as achievable by 75% of drivers.",
+  "claimed real-world":"The maker's own real-world estimate.",
+  "WLTP":"European test, closer to real driving than MIDC.",
+  "CLTC":"Chinese test, very optimistic.",
+  "claimed":"The source quotes this range without naming a test.",
+};
+function realRange(v){
+  if (!v.range_km) return null;
+  return Math.round(v.range_km * (REAL[v.range_standard] ?? 0.75) / 5) * 5;
+}
+function kwhPerKm(v){ // energy drawn from the wall per km, including ~10% charging loss
+  const r = realRange(v);
+  if (!r || !v.battery_kwh) return null;
+  return v.battery_kwh * 0.92 / r * 1.1;
+}
+function costPerKm(v, tariff = prefs.tariff){ const e = kwhPerKm(v); return e == null ? null : e * tariff; }
+const petrolPerKm = () => prefs.petrol / prefs.kmpl;
+function chargeMinutes(v){
+  const m = /(\d+)\s*(?:-|–|to)\s*(\d+)\s*%\s*in\s*(\d+)\s*min/i.exec(v.dc_charge_time_note || "");
+  if (m) return {mins: +m[3], window: `${m[1]}–${m[2]}%`};
+  if (v.dc_charge_max_kw && v.battery_kwh){ // rough: 10–80% at ~60% of peak power on average
+    return {mins: Math.round(v.battery_kwh * 0.7 / (v.dc_charge_max_kw * 0.6) * 60), window: "10–80%", est: true};
+  }
+  return null;
+}
+const SEVEN = b => /3-row|mpv/i.test(b || "");
+function seats(b){ return SEVEN(b) ? "6–7 seats" : /roadster|coupe$/i.test(b || "") ? "2–4 seats" : "5 seats"; }
+
+/* ---------- car art (original line drawings, no photos) ---------- */
+const SHAPES = {
+  hatch:"M16 64C16 54 24 49 36 47L66 43C82 27 98 21 130 21C160 21 176 25 192 37L207 50C215 52 221 57 221 63V68H16Z",
+  sedan:"M10 63C10 55 18 51 30 49L70 44C85 30 101 25 128 25C150 25 167 31 184 44L214 48C226 50 232 56 232 63V68H10Z",
+  suv:"M10 63V49C10 45 14 43 20 42L58 38C74 22 90 16 120 16H196C206 16 212 22 218 34L226 44C230 46 232 51 232 57V68H10Z",
+  mpv:"M10 63V47C10 43 14 41 20 40L44 37C60 19 80 13 110 13H204C214 13 220 21 224 35L228 46C231 49 232 53 232 57V68H10Z",
+  coupe:"M10 63C10 55 20 51 34 49L74 43C92 29 110 25 136 25C164 25 184 35 204 47L218 51C228 53 232 57 232 63V68H10Z",
+  csuv:"M10 63V50C10 46 14 44 20 43L60 39C78 24 96 19 124 19C156 19 180 28 202 42L224 47C230 49 232 53 232 58V68H10Z",
+};
+const GLASS = {
+  hatch:"M74 43C88 30 102 26 128 26C152 26 166 29 180 39L188 45Z",
+  sedan:"M78 44C92 33 106 30 128 30C146 30 160 34 174 44Z",
+  suv:"M66 38C80 26 94 22 120 22H192C199 22 204 27 208 36L210 39Z",
+  mpv:"M52 37C66 23 84 19 110 19H200C208 19 212 26 215 35L216 38Z",
+  coupe:"M82 43C98 33 114 30 136 30C156 30 172 36 186 45Z",
+  csuv:"M68 39C84 28 100 24 124 24C148 24 166 30 182 40Z",
+};
+function shapeFor(b){
+  b = (b || "").toLowerCase();
+  if (b.includes("hatch")) return "hatch";
+  if (b === "sedan") return "sedan";
+  if (b.includes("coupe suv")) return "csuv";
+  if (b.includes("coupe") || b.includes("roadster")) return "coupe";
+  if (SEVEN(b)) return "mpv";
+  return "suv";
+}
+function hue(s){ let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+function artBg(make){ const h = hue(make); return `background:radial-gradient(120% 90% at 30% 10%,hsl(${h} 45% 50% / .28),transparent 60%),radial-gradient(90% 80% at 90% 100%,hsl(${(h+50)%360} 50% 45% / .22),transparent 60%),var(--surface-2)`; }
+function carSVG(body, make){
+  const k = shapeFor(body), h = hue(make), id = "g" + Math.random().toString(36).slice(2, 8);
+  return `<svg viewBox="0 0 242 88" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${h} 30% 78%)"/><stop offset="1" stop-color="hsl(${h} 25% 46%)"/></linearGradient></defs>
+    <ellipse cx="121" cy="78" rx="112" ry="6" fill="#000" opacity=".25"/>
+    <path d="${SHAPES[k]}" fill="url(#${id})"/><path d="${GLASS[k]}" fill="#0b0c0e" opacity=".55"/>
+    <path d="M16 56H226" stroke="#fff" stroke-opacity=".18"/>
+    ${[60, 184].map(x => `<circle cx="${x}" cy="68" r="15" fill="#111316"/><circle cx="${x}" cy="68" r="7" fill="hsl(${h} 10% 62%)"/>`).join("")}</svg>`;
+}
+
+/* ---------- data ---------- */
+let ALL = [], MODELS = [], BY_SLUG = new Map(), BY_KEY = new Map();
 async function load(){
-  const r = await fetch("vehicles?limit=200");
-  const d = await r.json();
-  ALL = d.items;
-  // the API caps a page at 200; fetch more pages if the catalogue grows
-  for (let off = 200; off < d.total; off += 200){
-    const more = await (await fetch(`vehicles?limit=200&offset=${off}`)).json();
-    ALL = ALL.concat(more.items);
-  }
-  const makes = [...new Set(ALL.map(v => v.make))].sort();
-  const bodies = [...new Set(ALL.map(v => v.body_type).filter(Boolean))].sort();
-  $("#make").insertAdjacentHTML("beforeend", makes.map(m => `<option>${esc(m)}</option>`).join(""));
-  $("#body").insertAdjacentHTML("beforeend", bodies.map(m => `<option>${esc(m)}</option>`).join(""));
-  readHash(); render();
-}
-
-function filters(){
-  return {q: $("#q").value.trim().toLowerCase(), make: $("#make").value, body: $("#body").value,
-          maxp: +$("#maxp").value || null, minr: +$("#minr").value || null, sort: $("#sort").value};
-}
-function writeHash(){
-  const f = filters(), p = new URLSearchParams();
-  for (const [k, v] of Object.entries(f)) if (v && !(k === "sort" && v === "price")) p.set(k, v);
-  history.replaceState(null, "", p.toString() ? "#" + p : location.pathname);
-}
-function readHash(){
-  const p = new URLSearchParams(location.hash.slice(1));
-  for (const k of ["q","make","body","maxp","minr","sort"]) if (p.get(k)) $("#"+k).value = p.get(k);
-}
-
-function render(){
-  const f = filters();
-  const match = v =>
-    (!f.q || `${v.make} ${v.model} ${v.variant} ${v.body_type ?? ""}`.toLowerCase().includes(f.q)) &&
-    (!f.make || v.make === f.make) && (!f.body || v.body_type === f.body) &&
-    (!f.maxp || (v.price_min_inr != null && v.price_min_inr <= f.maxp)) &&
-    (!f.minr || (v.range_km != null && v.range_km >= f.minr));
-  const rows = ALL.filter(match);
-
-  // group versions under their model
+  const first = await (await fetch("vehicles?limit=200")).json();
+  ALL = first.items;
+  for (let off = 200; off < first.total; off += 200)
+    ALL = ALL.concat((await (await fetch(`vehicles?limit=200&offset=${off}`)).json()).items);
   const groups = new Map();
-  for (const v of rows){
-    const k = v.make + "|" + v.model;
-    if (!groups.has(k)) groups.set(k, {make: v.make, model: v.model, body: v.body_type, vers: []});
-    groups.get(k).vers.push(v);
+  for (const v of ALL){
+    BY_SLUG.set(v.slug, v);
+    const key = slugify(`${v.make} ${v.model}`);
+    if (!groups.has(key)) groups.set(key, {key, make: v.make, model: v.model, body: v.body_type, vers: []});
+    groups.get(key).vers.push(v);
   }
-  for (const x of groups.values()) x.vers.sort((a, b) => (a.battery_kwh ?? 0) - (b.battery_kwh ?? 0) || (a.price_min_inr ?? 0) - (b.price_min_inr ?? 0));
-  const g = [...groups.values()].map(x => ({...x,
-    pmin: Math.min(...x.vers.map(v => v.price_min_inr ?? Infinity)),
-    pmax: Math.max(...x.vers.map(v => v.price_max_inr ?? v.price_min_inr ?? 0)),
-    rmax: Math.max(...x.vers.map(v => v.range_km ?? 0)),
-    bmax: Math.max(...x.vers.map(v => v.battery_kwh ?? 0))}));
-  const by = {price: (a,b) => a.pmin - b.pmin, "-price": (a,b) => b.pmin - a.pmin, "-range": (a,b) => b.rmax - a.rmax,
-              "-battery": (a,b) => b.bmax - a.bmax, name: (a,b) => (a.make+a.model).localeCompare(b.make+b.model)};
-  g.sort(by[f.sort] || by.price);
-
-  $("#count").textContent = `${g.length} models · ${rows.length} versions`;
-  $("#empty").hidden = g.length > 0;
-  $("#grid").innerHTML = g.map(x => `
-    <article class="card">
-      <div><div class="make">${esc(x.make)}</div><h3>${esc(x.model)}</h3></div>
-      <div class="price">${priceRange(isFinite(x.pmin) ? x.pmin : null, x.pmax || null)}</div>
-      <div>${x.body ? `<span class="tag">${esc(x.body)}</span>` : ""}${x.rmax ? `<span class="tag">up to ${x.rmax} km</span>` : ""}</div>
-      <div class="versions">${x.vers.map(v => `
-        <div class="ver" data-slug="${esc(v.slug)}">
-          <div><div class="nm">${esc(v.variant || v.model)}</div>
-            <div class="sp">${[num(v.battery_kwh,"kWh"), v.range_km ? `${v.range_km} km${v.range_standard ? " " + esc(v.range_standard) : ""}` : "", v.power_kw ? Math.round(v.power_kw)+" kW" : ""].filter(Boolean).join(" · ")}</div></div>
-          <span class="sp">Details</span>
-          <input type="checkbox" title="Add to compare" aria-label="Compare ${esc(v.model)} ${esc(v.variant)}" data-cmp="${esc(v.slug)}" ${picked.has(v.slug) ? "checked" : ""}>
-        </div>`).join("")}
-      </div>
-    </article>`).join("");
-  writeHash();
+  MODELS = [...groups.values()].map(m => {
+    m.vers.sort((a, b) => (a.price_min_inr ?? 9e12) - (b.price_min_inr ?? 9e12) || (a.battery_kwh ?? 0) - (b.battery_kwh ?? 0));
+    const prices = m.vers.flatMap(v => [v.price_min_inr, v.price_max_inr]).filter(x => x != null);
+    m.pmin = prices.length ? Math.min(...prices) : null;
+    m.pmax = prices.length ? Math.max(...prices) : null;
+    m.real = Math.max(0, ...m.vers.map(v => realRange(v) ?? 0)) || null;
+    m.claimed = Math.max(0, ...m.vers.map(v => v.range_km ?? 0)) || null;
+    m.bmax = Math.max(0, ...m.vers.map(v => v.battery_kwh ?? 0)) || null;
+    m.dc = Math.max(0, ...m.vers.map(v => v.dc_charge_max_kw ?? 0)) || null;
+    m.cpk = Math.min(...m.vers.map(v => costPerKm(v) ?? Infinity));
+    return m;
+  });
+  for (const m of MODELS) BY_KEY.set(m.key, m);
+  // "Best value": most real-world km per lakh, among cars under ₹25 L
+  const val = MODELS.filter(m => m.real && m.pmin && m.pmin < 25e5).sort((a, b) => b.real / b.pmin - a.real / a.pmin).slice(0, 3);
+  val.forEach(m => m.badge = "Best value");
 }
 
-const ROWS = [
-  ["Price", v => priceRange(v.price_min_inr, v.price_max_inr)],
-  ["Body type", v => esc(v.body_type)],
-  ["Battery", v => num(v.battery_kwh, "kWh") + (v.battery_chemistry ? ` (${esc(v.battery_chemistry)})` : "")],
-  ["Claimed range", v => v.range_km ? `${v.range_km} km` + (v.range_standard ? ` <span class="muted">(${esc(v.range_standard)})</span>` : "") : ""],
-  ["Power", v => ps(v.power_kw)],
-  ["Torque", v => num(v.torque_nm, "Nm")],
-  ["Drive", v => esc(v.drivetrain)],
-  ["DC fast charging", v => [num(v.dc_charge_max_kw, "kW"), esc(v.dc_charge_time_note)].filter(Boolean).join(", ")],
-  ["AC charging", v => num(v.ac_charge_max_kw, "kW")],
-];
-
-async function showDetail(slug){
-  const v = await (await fetch("vehicles/" + encodeURIComponent(slug))).json();
-  const src = v.records.map(r => `<a href="${esc(r.source_url)}" target="_blank" rel="noopener">${esc(new URL(r.source_url).hostname)}</a>`);
-  for (const u of v.extra.other_sources || []) src.push(`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname)}</a>`);
-  $("#dlgbody").innerHTML = `
-    <button class="close" onclick="dlg.close()">Close</button>
-    <div class="muted">${esc(v.make)}</div><h2>${esc(v.model)} <span class="muted">${esc(v.variant)}</span></h2>
-    <table>${ROWS.map(([k, f]) => { const val = f(v); return val ? `<tr><th>${k}</th><td>${val}</td></tr>` : ""; }).join("")}</table>
-    ${v.price_note || v.extra.note ? `<div class="note">${esc([v.price_note, v.extra.note].filter(Boolean).join(" "))}</div>` : ""}
-    <p class="src">Sources: ${src.join(", ")}. Last checked ${esc(v.extra.last_verified || "")}. Blank specs weren't stated by the source.</p>`;
-  $("#dlg").showModal();
-}
-
-async function showCompare(){
-  const slugs = [...picked.keys()];
-  const vs = await (await fetch("compare?slugs=" + slugs.map(encodeURIComponent).join(","))).json();
-  $("#dlgbody").innerHTML = `
-    <button class="close" onclick="dlg.close()">Close</button><h2>Compare</h2>
-    <div style="overflow-x:auto"><table class="cmp">
-      <tr><th></th>${vs.map(v => `<th><span class="muted">${esc(v.make)}</span><br><strong>${esc(v.model)}</strong><br>${esc(v.variant)}</th>`).join("")}</tr>
-      ${ROWS.map(([k, f]) => `<tr><th>${k}</th>${vs.map(v => `<td>${f(v) || '<span class="muted">–</span>'}</td>`).join("")}</tr>`).join("")}
-    </table></div>
-    <p class="src">Ranges measured on different tests (MIDC, ARAI, WLTP) aren't directly comparable.</p>`;
-  $("#dlg").showModal();
-}
-
-function updateCmpBar(){
-  $("#cmpbar").style.display = picked.size ? "block" : "none";
-  $("#cmpchips").innerHTML = [...picked.values()].map(l => `<span class="chip">${esc(l)}</span>`).join(" ");
-  $("#cmpgo").disabled = picked.size < 2;
-}
-
-$("#grid").addEventListener("click", e => {
-  const box = e.target.closest("[data-cmp]");
-  if (box){
-    const slug = box.dataset.cmp, v = ALL.find(x => x.slug === slug);
-    if (box.checked){
-      if (picked.size >= 4){ box.checked = false; $("#cmpchips").insertAdjacentHTML("beforeend", ' <span class="muted">Up to 4 cars.</span>'); return; }
-      picked.set(slug, `${v.model} ${v.variant}`);
-    } else picked.delete(slug);
-    updateCmpBar(); return;
+/* ---------- compare tray ---------- */
+let picked = store.get("compare", []).filter(Boolean);
+function savePicked(){ store.set("compare", picked); renderTray(); }
+function togglePick(slug){
+  const i = picked.indexOf(slug);
+  if (i >= 0) picked.splice(i, 1);
+  else {
+    if (picked.length >= 4){ toast("You can compare up to 4 cars"); return false; }
+    picked.push(slug); toast("Added to compare");
   }
-  const ver = e.target.closest(".ver");
-  if (ver) showDetail(ver.dataset.slug);
+  savePicked(); return true;
+}
+function renderTray(){
+  picked = picked.filter(s => BY_SLUG.has(s));
+  const onCompare = location.hash.startsWith("#/compare");
+  $("#tray").classList.toggle("show", picked.length > 0 && !onCompare);
+  $("#trayItems").innerHTML = picked.map(s => { const v = BY_SLUG.get(s);
+    return `<span class="it">${esc(v.model)} <span class="faint">${esc(v.variant)}</span><button data-unpick="${esc(s)}" aria-label="Remove ${esc(v.model)}">✕</button></span>`; }).join("");
+  const go = $("#trayGo");
+  go.href = "#/compare/" + picked.join(",");
+  go.textContent = picked.length < 2 ? "Add one more" : `Compare ${picked.length}`;
+  go.toggleAttribute("disabled", picked.length < 2);
+}
+let toastT;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 1600); }
+
+/* ---------- router ---------- */
+function route(){
+  const h = location.hash.replace(/^#/, "") || "/";
+  const [path, qs] = h.split("?");
+  const parts = path.split("/").filter(Boolean);
+  document.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("on",
+    (a.dataset.nav === "home" && (!parts[0] || parts[0] === "car")) || a.dataset.nav === parts[0]));
+  if (parts[0] === "car") renderCar(parts[1], parts[2]);
+  else if (parts[0] === "compare") renderCompare(parts[1] ? decodeURIComponent(parts[1]).split(",") : picked);
+  else if (parts[0] === "match") renderMatch();
+  else renderHome(new URLSearchParams(qs || ""));
+  renderTray();
+}
+let lastPath = null;
+window.addEventListener("hashchange", () => {
+  const p = location.hash.split("?")[0];
+  route();
+  if (p !== lastPath) window.scrollTo({top: 0});
+  lastPath = p;
 });
-for (const id of ["q","make","body","maxp","minr","sort"]) $("#"+id).addEventListener("input", render);
-$("#cmpgo").onclick = showCompare;
-$("#cmpclear").onclick = () => { picked.clear(); updateCmpBar(); render(); };
-const dlg = $("#dlg");
-dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+window.addEventListener("scroll", () => $("#bar").classList.toggle("scrolled", scrollY > 8), {passive: true});
 
-load().catch(err => { $("#grid").innerHTML = `<div class="empty">Couldn't load cars: ${esc(err.message)}</div>`; });
+/* ---------- home + browse ---------- */
+const BUDGETS = [["u10", "Under ₹10 L", 0, 10e5], ["10-15", "₹10–15 L", 10e5, 15e5], ["15-25", "₹15–25 L", 15e5, 25e5],
+                 ["25-50", "₹25–50 L", 25e5, 50e5], ["50+", "₹50 L+", 50e5, 1e12]];
+const BODIES = [["hatch", "Hatchback", b => /hatch/i.test(b)], ["sedan", "Sedan", b => /^sedan$/i.test(b)],
+                ["suv", "SUV", b => /suv|crossover/i.test(b) && !SEVEN(b)], ["7", "7-seater", SEVEN],
+                ["sport", "Coupe & sports", b => /^(coupe|roadster)$/i.test(b)]];
+const EXTRAS = [["r300", "300 km+ real-world", m => m.real >= 300], ["r400", "400 km+ real-world", m => m.real >= 400],
+                ["fast", "Fast charging 100 kW+", m => m.dc >= 100]];
+const SORTS = {pop: "Recommended", price: "Price: low to high", "-price": "Price: high to low", range: "Real-world range", cost: "Cheapest to run", name: "Name"};
+const POPULAR = ["tata-nexon-ev","tata-punch-ev","mg-windsor-ev","mahindra-be-6","tata-curvv-ev","mahindra-xev-9e","maruti-suzuki-e-vitara","hyundai-creta-electric","tata-tiago-ev","mg-comet-ev","mahindra-xuv-3xo-ev"];
+
+function renderHome(p){
+  const f = {q: p.get("q") || "", budget: p.get("budget") || "", body: p.get("body") || "", extra: p.get("x") || "", make: p.get("make") || "", sort: p.get("sort") || "pop"};
+  const firstRender = !$("#browse");
+  if (firstRender){
+    const brands = new Set(MODELS.map(m => m.make)).size;
+    app.innerHTML = `
+    <section class="hero fade-in">
+      <span class="eyebrow"><i></i>Made for India's EV buyers</span>
+      <h1>Every EV in India. <em>Honestly</em> compared.</h1>
+      <p class="lede">See the range you'll really get, what it costs to run each month, and how fast it charges. Then let us match you to the right car in 30 seconds.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#/match">Find my EV in 30 seconds →</a>
+        <a class="btn ghost" href="#browse" id="toBrowse">Browse all ${MODELS.length} cars</a>
+      </div>
+      <div class="promise">
+        <div><b>${MODELS.length}</b><span>EV models on sale</span></div>
+        <div><b>${brands}</b><span>brands, from Tata to Rolls-Royce</span></div>
+        <div><b>0</b><span>ads or sponsored listings</span></div>
+        <div><b>0</b><span>phone numbers asked</span></div>
+      </div>
+    </section>
+    <section id="browse">
+      <div class="section-head"><h2>Explore every EV</h2><button class="linkbtn hidden" id="clear">Clear filters</button></div>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Search Nexon, Mahindra, 7-seater…" autocomplete="off" aria-label="Search cars"><kbd>/</kbd>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filters"></div>
+      <div class="toolbar">
+        <span class="count" id="count"></span><span class="spacer"></span>
+        <select class="select" id="make" aria-label="Brand"><option value="">All brands</option>${[...new Set(MODELS.map(m => m.make))].sort().map(m => `<option>${esc(m)}</option>`).join("")}</select>
+        <select class="select" id="sort" aria-label="Sort">${Object.entries(SORTS).map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="empty hidden" id="empty">No cars match all of these. <button class="linkbtn" data-clear>Clear filters</button></div>
+    </section>`;
+    $("#q").addEventListener("input", e => setF({q: e.target.value}));
+    $("#make").addEventListener("change", e => setF({make: e.target.value}));
+    $("#sort").addEventListener("change", e => setF({sort: e.target.value}));
+    $("#toBrowse").addEventListener("click", e => { e.preventDefault(); $("#browse").scrollIntoView({behavior: "smooth"}); });
+  }
+  if (document.activeElement !== $("#q")) $("#q").value = f.q;
+  $("#make").value = f.make; $("#sort").value = SORTS[f.sort] ? f.sort : "pop";
+  const chip = (group, k, label, on) => `<button class="chip ${on ? "on" : ""}" data-f="${group}" data-v="${k}" aria-pressed="${on}">${label}</button>`;
+  $("#chips").innerHTML = BUDGETS.map(([k, l]) => chip("budget", k, l, f.budget === k)).join("") + `<span class="chip-sep"></span>` +
+    BODIES.map(([k, l]) => chip("body", k, l, f.body === k)).join("") + `<span class="chip-sep"></span>` +
+    EXTRAS.map(([k, l]) => chip("x", k, l, f.extra === k)).join("");
+  $("#clear").classList.toggle("hidden", !(f.q || f.budget || f.body || f.extra || f.make));
+
+  const q = f.q.trim().toLowerCase();
+  const B = BUDGETS.find(b => b[0] === f.budget), BD = BODIES.find(b => b[0] === f.body), X = EXTRAS.find(x => x[0] === f.extra);
+  let rows = MODELS.filter(m =>
+    (!q || `${m.make} ${m.model} ${m.body ?? ""} ${seats(m.body)} ${m.vers.map(v => v.variant).join(" ")}`.toLowerCase().includes(q) ||
+           (q.includes("7") && SEVEN(m.body))) &&
+    (!B || (m.pmin != null && m.pmin >= B[2] && m.pmin < B[3])) &&
+    (!BD || BD[2](m.body || "")) && (!X || X[2](m)) && (!f.make || m.make === f.make));
+  const pop = k => { const i = POPULAR.indexOf(k); return i < 0 ? 99 : i; };
+  const by = {
+    pop: (a, b) => pop(a.key) - pop(b.key) || (a.pmin ?? 9e12) - (b.pmin ?? 9e12),
+    price: (a, b) => (a.pmin ?? 9e12) - (b.pmin ?? 9e12), "-price": (a, b) => (b.pmin ?? 0) - (a.pmin ?? 0),
+    range: (a, b) => (b.real ?? 0) - (a.real ?? 0), cost: (a, b) => a.cpk - b.cpk,
+    name: (a, b) => (a.make + a.model).localeCompare(b.make + b.model)};
+  rows.sort(by[f.sort] || by.pop);
+  $("#count").textContent = `${rows.length} ${rows.length === 1 ? "car" : "cars"}`;
+  $("#empty").classList.toggle("hidden", rows.length > 0);
+  $("#grid").innerHTML = rows.map(cardHTML).join("");
+}
+function cardHTML(m){
+  const v = m.vers[0], on = m.vers.some(x => picked.includes(x.slug));
+  const cpk = isFinite(m.cpk) ? `₹${m.cpk.toFixed(2)}` : "–";
+  return `<article class="card">
+    <div class="art" style="${artBg(m.make)}">${m.badge ? `<span class="pill badge">★ ${m.badge}</span>` : ""}${carSVG(m.body, m.make)}</div>
+    <button class="pill cmp ${on ? "on" : ""}" data-pick="${esc(v.slug)}" aria-pressed="${on}" title="Add ${esc(m.model)} ${esc(v.variant)} to compare">${on ? "✓ Comparing" : "+ Compare"}</button>
+    <div class="body">
+      <div><div class="make">${esc(m.make)}</div><h3><a class="stretch" href="#/car/${m.key}">${esc(m.model)}</a></h3></div>
+      <div class="price">${priceRange(m.pmin, m.pmax)} <small>· ${m.vers.length} ${m.vers.length === 1 ? "version" : "versions"}</small></div>
+      <div class="stats">
+        <div class="stat"><b>${m.real ? "~" + m.real : "–"}</b><span>km real-world</span></div>
+        <div class="stat"><b>${m.bmax ? n1(m.bmax) : "–"}</b><span>kWh battery</span></div>
+        <div class="stat"><b>${cpk}</b><span>per km</span></div>
+      </div>
+    </div></article>`;
+}
+function setF(change){
+  const p = new URLSearchParams((location.hash.split("?")[1]) || "");
+  for (const [k, v] of Object.entries(change)) v ? p.set(k, v) : p.delete(k);
+  if (p.get("sort") === "pop") p.delete("sort");
+  history.replaceState(null, "", "#/" + (p.toString() ? "?" + p : ""));
+  renderHome(p);
+}
+
+/* ---------- car page ---------- */
+function renderCar(key, slug){
+  const m = BY_KEY.get(key);
+  if (!m){ app.innerHTML = `<a class="back" href="#/">← All cars</a><div class="empty">We couldn't find that car.</div>`; return; }
+  const v = m.vers.find(x => x.slug === slug) || m.vers[0];
+  const real = realRange(v), ch = chargeMinutes(v), cpk = costPerKm(v);
+  const on = picked.includes(v.slug);
+  document.title = `${m.make} ${m.model} · Kilowise`;
+  const row = (k, val) => val ? `<tr><th>${k}</th><td>${val}</td></tr>` : "";
+  const notes = [v.price_note, v.extra?.note].filter(Boolean);
+  app.innerHTML = `
+  <a class="back" href="#/">← All cars</a>
+  <section class="car-hero fade-in">
+    <div>
+      <div class="make muted" style="font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:13px">${esc(m.make)}</div>
+      <h1>${esc(m.model)}</h1>
+      <div class="price">${priceRange(v.price_min_inr, v.price_max_inr)} <span class="muted" style="font:500 14px var(--body)">ex-showroom</span></div>
+      <div class="muted" style="margin-top:6px">${esc(cap(m.body || "car"))} · ${seats(m.body)}${v.drivetrain ? " · " + esc(v.drivetrain) : ""}</div>
+      ${m.vers.length > 1 ? `<div class="seg" role="tablist" aria-label="Versions">${m.vers.map(x => `<button role="tab" aria-selected="${x === v}" class="${x === v ? "on" : ""}" data-go="#/car/${m.key}/${esc(x.slug)}">${esc(x.variant || x.model)}</button>`).join("")}</div>` : `<div style="height:18px"></div>`}
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn ${on ? "" : "primary"}" data-pick="${esc(v.slug)}" data-rerender>${on ? "✓ In compare" : "+ Add to compare"}</button>
+        <a class="btn ghost" href="#/match">Is it right for me?</a>
+      </div>
+    </div>
+    <div class="art" style="${artBg(m.make)}">${carSVG(m.body, m.make)}</div>
+  </section>
+
+  <section class="tiles">
+    <div class="tile hl"><div class="k">Real-world range <span class="tip" title="Our estimate for mixed Indian driving with AC on, based on the claimed figure and the test it came from.">i</span></div>
+      <div class="v">${real ? "~" + real + "<small> km</small>" : "–"}</div><div class="s">${v.range_km ? `Claimed ${v.range_km} km${v.range_standard ? " (" + esc(v.range_standard) + ")" : ""}` : "Range not published"}</div></div>
+    <div class="tile"><div class="k">Battery</div><div class="v">${v.battery_kwh ? n1(v.battery_kwh) + "<small> kWh</small>" : "–"}</div><div class="s">${esc(v.battery_chemistry || "Usable ~92%")}</div></div>
+    <div class="tile"><div class="k">Fast charge</div><div class="v">${ch ? ch.mins + "<small> min</small>" : v.dc_charge_max_kw ? Math.round(v.dc_charge_max_kw) + "<small> kW</small>" : "–"}</div><div class="s">${ch ? `${ch.window}${ch.est ? " (estimated)" : ""}${v.dc_charge_max_kw ? " · " + Math.round(v.dc_charge_max_kw) + " kW peak" : ""}` : "Not published"}</div></div>
+    <div class="tile"><div class="k">Running cost</div><div class="v">${cpk ? "₹" + cpk.toFixed(2) + "<small>/km</small>" : "–"}</div><div class="s">Home charging at ₹${prefs.tariff}/kWh</div></div>
+  </section>
+
+  <section class="cols">
+    <div class="panel calc" id="calc">
+      <h3>What it costs you</h3>
+      ${cpk ? `
+      <label>I drive <b><span id="dk">${prefs.daily}</span> km a day</b></label>
+      <input type="range" id="daily" min="5" max="200" step="5" value="${prefs.daily}" aria-label="Kilometres per day">
+      <div class="save" id="saveOut"></div>
+      <div class="inputs">
+        <label>Electricity ₹/kWh<input type="number" id="tariff" value="${prefs.tariff}" min="1" step="0.5"></label>
+        <label>Petrol ₹/litre<input type="number" id="petrol" value="${prefs.petrol}" min="1"></label>
+        <label>Petrol car km/l<input type="number" id="kmpl" value="${prefs.kmpl}" min="1"></label>
+      </div>
+      <p class="info" style="margin-top:12px">Uses our real-world range estimate and home charging. Public fast chargers cost about ₹18–25/kWh.</p>` :
+      `<p class="muted">We can't estimate running costs until the range of this version is published.</p>`}
+    </div>
+    <div class="panel">
+      <h3>Full specs</h3>
+      <table class="specs">
+        ${row("Price", priceRange(v.price_min_inr, v.price_max_inr))}
+        ${row("Battery", v.battery_kwh ? `${n1(v.battery_kwh)} kWh${v.battery_chemistry ? " " + esc(v.battery_chemistry) : ""}` : "")}
+        ${row("Claimed range", v.range_km ? `${v.range_km} km${v.range_standard ? ` <span class="muted">· ${esc(v.range_standard)}</span>` : ""}` : "")}
+        ${row("Range test", STD_INFO[v.range_standard] ? esc(STD_INFO[v.range_standard]) : "")}
+        ${row("Power", v.power_kw ? `${Math.round(v.power_kw)} kW <span class="muted">· ${ps(v.power_kw)} PS</span>` : "")}
+        ${row("Torque", v.torque_nm ? `${Math.round(v.torque_nm)} Nm` : "")}
+        ${row("Drive", esc(v.drivetrain))}
+        ${row("DC fast charging", [v.dc_charge_max_kw ? Math.round(v.dc_charge_max_kw) + " kW peak" : "", esc(v.dc_charge_time_note)].filter(Boolean).join(" · "))}
+        ${row("AC charging", v.ac_charge_max_kw ? `${n1(v.ac_charge_max_kw)} kW` + (v.battery_kwh ? ` <span class="muted">· full in ~${Math.ceil(v.battery_kwh / v.ac_charge_max_kw)} h</span>` : "") : "")}
+        ${row("Body", esc(cap(v.body_type || "")))}
+      </table>
+      ${notes.length ? `<div class="note"><b>Worth knowing:</b> ${esc(notes.join(" "))}</div>` : ""}
+      <p class="info sources" style="margin-top:14px">Sources: <span id="srcs">${sourcesHTML(v)}</span>. Blank specs weren't stated by the source.${v.extra?.last_verified ? " Checked " + esc(v.extra.last_verified) + "." : ""}</p>
+    </div>
+  </section>`;
+  if (cpk) bindCalc(v);
+  fetch("vehicles/" + encodeURIComponent(v.slug)).then(r => r.json()).then(d => {
+    const el = $("#srcs"); if (el && d.records) { v.records = d.records; el.innerHTML = sourcesHTML(v); }
+  }).catch(() => {});
+}
+const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+function host(u){ try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } }
+function sourcesHTML(v){
+  const urls = [...(v.records || []).map(r => r.source_url), ...(v.extra?.other_sources || [])].filter(Boolean);
+  if (!urls.length) return "listed in the API";
+  return [...new Set(urls)].map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(host(u))}</a>`).join(", ");
+}
+function bindCalc(v){
+  const out = () => {
+    const km = prefs.daily * 30, ev = costPerKm(v) * km, pet = petrolPerKm() * km;
+    const real = realRange(v), perWeek = real ? Math.max(1, Math.ceil(prefs.daily * 7 / (real * 0.8))) : null;
+    $("#dk").textContent = prefs.daily;
+    $("#saveOut").innerHTML = `
+      <div><b>${rupees(ev)}</b><span>a month to charge</span></div>
+      <div><b>${rupees(pet)}</b><span>for a petrol car</span></div>
+      <div class="big"><b>${rupees(Math.max(0, pet - ev) * 60)}</b><span>saved on fuel over 5 years${perWeek ? ` · charge about ${perWeek}× a week` : ""}</span></div>`;
+  };
+  $("#daily").addEventListener("input", e => { prefs.daily = +e.target.value; store.set("prefs", prefs); out(); });
+  for (const k of ["tariff", "petrol", "kmpl"]) $("#" + k).addEventListener("input", e => {
+    const x = parseFloat(e.target.value); if (x > 0){ prefs[k] = x; store.set("prefs", prefs); out(); } });
+  out();
+}
+
+/* ---------- compare ---------- */
+function renderCompare(slugs){
+  document.title = "Compare · Kilowise";
+  slugs = (slugs || []).filter(s => BY_SLUG.has(s)).slice(0, 4);
+  if (slugs.join(",") !== picked.join(",") && location.hash.startsWith("#/compare/")) { picked = [...slugs]; store.set("compare", picked); }
+  const vs = slugs.map(s => BY_SLUG.get(s));
+  const addSel = `<select class="select" id="addCar" aria-label="Add a car"><option value="">+ Add a car</option>${MODELS.slice().sort((a, b) => (a.make + a.model).localeCompare(b.make + b.model)).map(m => `<optgroup label="${esc(m.make)} ${esc(m.model)}">${m.vers.map(v => `<option value="${esc(v.slug)}" ${slugs.includes(v.slug) ? "disabled" : ""}>${esc(m.model)} ${esc(v.variant)}</option>`).join("")}</optgroup>`).join("")}</select>`;
+  if (vs.length < 2){
+    app.innerHTML = `<div class="section-head"><h2>Compare</h2></div>
+      <div class="empty"><p style="font-size:17px;color:var(--text);margin-top:0">Pick ${vs.length ? "one more car" : "two to four cars"} to compare side by side.</p>
+      <p>Use “+ Compare” on any car, or add one here.</p><div style="max-width:340px;margin:16px auto 0">${addSel}</div>
+      ${vs.length ? `<p style="margin-top:16px">Comparing: <b style="color:var(--text)">${esc(vs[0].model)} ${esc(vs[0].variant)}</b></p>` : ""}</div>`;
+    bindAdd(slugs); return;
+  }
+  // rows: [label, value fn (number for "best" ranking), display fn, better: "max"|"min"|null]
+  const R = [
+    ["grp", "Price & running cost"],
+    ["Ex-showroom price", v => v.price_min_inr, v => priceRange(v.price_min_inr, v.price_max_inr), "min"],
+    ["Running cost", v => costPerKm(v), v => costPerKm(v) ? `₹${costPerKm(v).toFixed(2)}/km` : "", "min"],
+    ["Monthly charging", v => costPerKm(v) && costPerKm(v) * prefs.daily * 30, v => costPerKm(v) ? `${rupees(costPerKm(v) * prefs.daily * 30)} <span class="muted">at ${prefs.daily} km/day</span>` : "", "min"],
+    ["grp", "Range & battery"],
+    ["Real-world range", v => realRange(v), v => realRange(v) ? `~${realRange(v)} km` : "", "max"],
+    ["Claimed range", v => null, v => v.range_km ? `${v.range_km} km <span class="muted">${esc(v.range_standard || "")}</span>` : "", null],
+    ["Battery", v => v.battery_kwh, v => v.battery_kwh ? `${n1(v.battery_kwh)} kWh` : "", "max"],
+    ["grp", "Charging"],
+    ["DC fast charge peak", v => v.dc_charge_max_kw, v => v.dc_charge_max_kw ? `${Math.round(v.dc_charge_max_kw)} kW` : "", "max"],
+    ["Fast charge time", v => chargeMinutes(v)?.mins, v => { const c = chargeMinutes(v); return c ? `${c.mins} min <span class="muted">${c.window}${c.est ? " est." : ""}</span>` : ""; }, "min"],
+    ["AC charging", v => v.ac_charge_max_kw, v => v.ac_charge_max_kw ? `${n1(v.ac_charge_max_kw)} kW` : "", "max"],
+    ["grp", "Performance"],
+    ["Power", v => v.power_kw, v => v.power_kw ? `${Math.round(v.power_kw)} kW <span class="muted">${ps(v.power_kw)} PS</span>` : "", "max"],
+    ["Torque", v => v.torque_nm, v => v.torque_nm ? `${Math.round(v.torque_nm)} Nm` : "", "max"],
+    ["Drive", v => null, v => esc(v.drivetrain), null],
+    ["grp", "Practicality"],
+    ["Body", v => null, v => esc(cap(v.body_type || "")), null],
+    ["Seats", v => null, v => seats(v.body_type), null],
+  ];
+  const body = R.map(([label, val, disp, better]) => {
+    if (label === "grp") return `<tr class="grp"><th>${val}</th>${vs.map(() => "<td></td>").join("")}</tr>`;
+    const nums = vs.map(v => val(v)).map(x => (x == null || !isFinite(x)) ? null : x);
+    const known = nums.filter(x => x != null);
+    const best = better && known.length > 1 && new Set(known).size > 1 ? (better === "max" ? Math.max(...known) : Math.min(...known)) : null;
+    return `<tr><th>${label}</th>${vs.map((v, i) => { const d = disp(v);
+      return `<td class="${best != null && nums[i] === best ? "best" : ""}">${d || '<span class="faint">Not published</span>'}</td>`; }).join("")}</tr>`;
+  }).join("");
+  app.innerHTML = `
+  <div class="section-head"><div><h2>Compare</h2><p class="muted" style="margin:6px 0 0">The best figure in each row is marked. Real-world range is our estimate, so cars tested on different cycles compare fairly.</p></div>
+    <button class="btn sm" id="share">Copy link</button></div>
+  <div class="cmp-wrap fade-in"><table class="cmp-table">
+    <thead><tr><th></th>${vs.map(v => { const k = slugify(v.make + " " + v.model); return `<th>
+      <a href="#/car/${k}/${esc(v.slug)}" style="text-decoration:none"><div class="head-art" style="${artBg(v.make)}">${carSVG(v.body_type, v.make)}</div>
+      <div class="muted" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">${esc(v.make)}</div>
+      <div style="font:700 17px var(--display)">${esc(v.model)}</div><div class="muted" style="font-weight:500">${esc(v.variant)}</div></a>
+      <button class="linkbtn" data-unpick="${esc(v.slug)}" style="padding-left:0;margin-top:6px">Remove</button></th>`; }).join("")}
+      ${vs.length < 4 ? `<th><div class="add-col"><div class="head-art" style="border:1px dashed var(--line-strong)"><span class="muted">+</span></div>${addSel}</div></th>` : ""}</tr></thead>
+    <tbody>${body.replace(/<\/tr>/g, (vs.length < 4 ? "<td></td>" : "") + "</tr>")}</tbody>
+  </table></div>`;
+  bindAdd(slugs);
+  $("#share").onclick = () => { const u = location.href.split("#")[0] + "#/compare/" + slugs.join(",");
+    (navigator.clipboard?.writeText(u) || Promise.reject()).then(() => toast("Link copied"), () => toast(u)); };
+}
+function bindAdd(slugs){
+  const sel = $("#addCar"); if (!sel) return;
+  sel.addEventListener("change", () => { if (!sel.value) return; const s = [...slugs, sel.value].slice(0, 4);
+    picked = s; store.set("compare", picked); location.hash = "#/compare/" + s.join(","); });
+}
+
+/* ---------- match flow ---------- */
+const QUESTIONS = [
+  {id: "budget", q: "What's your budget?", sub: "Ex-showroom. We'll also show cars a little over it if they're worth it.", opts: [
+    ["12", "Up to ₹12 lakh", "City runabouts and compact SUVs", "🪙"], ["18", "₹12–18 lakh", "The sweet spot: most family EVs", "💳"],
+    ["25", "₹18–25 lakh", "Bigger batteries, more features", "💼"], ["45", "₹25–45 lakh", "Premium and long range", "✨"],
+    ["999", "No fixed budget", "Show me the best, whatever it costs", "🚀"]]},
+  {id: "daily", q: "How far do you drive on a normal day?", sub: "Office, school runs, errands, all of it.", opts: [
+    ["25", "Under 30 km", "Mostly in town", "🏙️"], ["50", "30–60 km", "A typical city commute", "🛣️"],
+    ["85", "60–100 km", "Long commute or across the city", "📍"], ["140", "Over 100 km", "On the road a lot", "🧭"]]},
+  {id: "home", q: "Can you charge where you park at night?", sub: "A regular 15 A socket or a wall box in your parking spot. This matters most.", opts: [
+    ["yes", "Yes, at home", "Own parking with power, or the society allows a charger", "🏠"],
+    ["work", "Only at work", "Charging available at the office", "🏢"],
+    ["no", "No, public chargers only", "I'd rely on fast-charging stations", "⚡"]]},
+  {id: "people", q: "Who's usually riding along?", sub: "", opts: [
+    ["2", "Just me, or two of us", "Size isn't a priority", "🧍"], ["5", "Family of 4–5", "Room for everyone and the luggage", "👨‍👩‍👧"],
+    ["7", "6 or 7 people", "I need a third row", "🚐"]]},
+  {id: "trips", q: "How often do you take highway trips?", sub: "Weekend getaways, trips to family in another city.", opts: [
+    ["rare", "Rarely", "A couple of times a year, or never", "🌙"], ["month", "About once a month", "200–300 km trips now and then", "🗓️"],
+    ["week", "Most weekends", "Long drives are a big part of my life", "🏔️"]]},
+];
+let ans = store.get("answers", {}), step = 0;
+function renderMatch(){
+  document.title = "Find my EV · Kilowise";
+  if (step >= QUESTIONS.length) return renderResults();
+  const Q = QUESTIONS[step];
+  app.innerHTML = `<div class="match">
+    <div class="muted" style="font-size:13px;font-weight:600">Question ${step + 1} of ${QUESTIONS.length}</div>
+    <div class="progress"><i style="width:${(step / QUESTIONS.length) * 100}%"></i></div>
+    <div class="q fade-in"><h2>${Q.q}</h2>${Q.sub ? `<p>${Q.sub}</p>` : "<p></p>"}
+      <div class="opts">${Q.opts.map(([v, t, s, ic]) => `<button class="opt ${ans[Q.id] === v ? "on" : ""}" data-ans="${v}"><span class="ic" aria-hidden="true">${ic}</span><span><b>${t}</b><span>${s}</span></span></button>`).join("")}</div>
+      <div class="q-nav">${step ? `<button class="btn ghost sm" id="prev">← Back</button>` : "<span></span>"}<span class="faint" style="font-size:13px;align-self:center">No sign-up, no phone number.</span></div>
+    </div></div>`;
+  requestAnimationFrame(() => { const i = $(".progress i"); if (i) i.style.width = ((step + 1) / QUESTIONS.length) * 100 + "%"; });
+  app.querySelectorAll("[data-ans]").forEach(b => b.onclick = () => {
+    ans[Q.id] = b.dataset.ans; store.set("answers", ans); b.classList.add("on");
+    setTimeout(() => { step++; renderMatch(); window.scrollTo({top: 0}); }, 180);
+  });
+  if (step) $("#prev").onclick = () => { step--; renderMatch(); };
+}
+function scoreVariant(v, a){
+  const budget = +a.budget * 1e5, daily = +a.daily, home = a.home, trips = a.trips;
+  const price = v.price_min_inr, real = realRange(v);
+  if (a.people === "7" && !SEVEN(v.body_type)) return null;
+  if (price == null || price > budget * 1.1) return null;
+  if (!real) return null;
+  const why = [], con = [];
+  let need = daily * (home === "yes" ? 2.5 : home === "work" ? 3 : 5);
+  if (trips === "week") need = Math.max(need, 380); else if (trips === "month") need = Math.max(need, 280);
+  need = Math.max(need, 150);
+  let s = 0;
+  s += Math.min(real / need, 1.4) / 1.4 * 38;                                       // range for your life
+  s += price <= budget ? 18 : 9;                                                   // budget
+  const valueRef = MODELS.filter(m => m.real && m.pmin).map(m => m.real / m.pmin);
+  s += Math.min((real / price) / Math.max(...valueRef), 1) * 14;                   // km per rupee
+  const dc = v.dc_charge_max_kw || 0;
+  const dcWeight = home === "no" || trips === "week" ? 18 : trips === "month" ? 12 : 7;
+  s += Math.min(dc / 100, 1) * dcWeight + (18 - dcWeight) * 0.6;                   // charging
+  if (a.people === "5" && /suv|sedan|crossover|mpv/i.test(v.body_type || "")) s += 6;
+  else if (a.people === "2") s += 6; else if (a.people === "7") s += 6;
+  if (v.range_standard && !["claimed"].includes(v.range_standard)) s += 4;           // data we trust
+  s = Math.round(Math.min(s, 99));
+
+  const perWeek = Math.max(1, Math.ceil(daily * 7 / (real * 0.8)));
+  why.push(`About ${real} km in real driving, so you'd charge ${perWeek === 1 ? "about once a week" : `about ${perWeek} times a week`}`);
+  const cpk = costPerKm(v, home === "no" ? 20 : prefs.tariff);
+  if (cpk) why.push(`Around ${rupees(cpk * daily * 30)} a month to charge${home === "no" ? " at public chargers" : ""}, vs ${rupees(petrolPerKm() * daily * 30)} in petrol`);
+  const ch = chargeMinutes(v);
+  if (ch && (home !== "yes" || trips !== "rare")) why.push(`Fast-charges ${ch.window} in about ${ch.mins} minutes${ch.est ? " (our estimate)" : ""}`);
+  if (price > budget) con.push(`About ${lakh(price - budget).replace("₹", "₹")} over your budget`);
+  if (real < need) con.push(`Range is tight for how you drive; plan charging stops on trips`);
+  if (home === "no") con.push(`Public charging only costs about 2–3× home charging and needs planning`);
+  if (!v.dc_charge_max_kw) con.push(`Fast-charging speed isn't published`);
+  if (["MIDC P1", "CLTC", "claimed"].includes(v.range_standard)) con.push(`Official range is on an optimistic test (${v.range_standard}); our estimate allows for that`);
+  const note = `${v.price_note || ""} ${v.extra?.note || ""}`;
+  if (/baas|rental/i.test(note)) con.push(`Some quoted prices assume battery rental (BaaS); check the buy-outright price`);
+  return {v, s, why, con};
+}
+function renderResults(){
+  const results = [];
+  for (const m of MODELS){
+    const best = m.vers.map(v => scoreVariant(v, ans)).filter(Boolean).sort((a, b) => b.s - a.s)[0];
+    if (best) results.push({...best, m});
+  }
+  results.sort((a, b) => b.s - a.s);
+  const top = results.slice(0, 3), more = results.slice(3, 7);
+  const verdict = ans.home === "no" && +ans.daily >= 85
+    ? "An EV can work for you, but without home charging and with long daily drives you'll depend on fast chargers. Check there are reliable ones on your route before you buy."
+    : ans.home === "no" ? "An EV can work without home charging if there are fast chargers near you. It's much easier, and cheaper, with even a 15 A socket at home."
+    : "Good news: you're the kind of driver who saves the most with an EV. Here are the cars that fit how you drive.";
+  app.innerHTML = `<div class="match fade-in">
+    <div class="progress"><i style="width:100%"></i></div>
+    <div class="q"><h2>${top.length ? "Your best matches" : "Nothing fits quite yet"}</h2><p>${top.length ? verdict : "No EV on sale matches all of those right now. Try a higher budget or fewer seats."}</p></div>
+    ${top.map((r, i) => resultHTML(r, i)).join("")}
+    ${more.length ? `<h3 style="margin:30px 0 12px;font-size:18px">Also worth a look</h3><div class="grid">${more.map(r => cardHTML(r.m)).join("")}</div>` : ""}
+    <div class="q-nav" style="margin-top:28px"><button class="btn ghost sm" id="redo">↺ Change my answers</button>
+      ${top.length > 1 ? `<a class="btn primary sm" href="#/compare/${top.map(r => r.v.slug).join(",")}">Compare top ${top.length}</a>` : ""}</div>
+    <p class="info" style="margin-top:20px">How we score: real-world range against how you drive (with a buffer for AC and battery ageing), price against your budget, range per rupee, fast-charging speed where you'll need it, and fit for your passengers. No brand pays to rank higher.</p>
+  </div>`;
+  $("#redo").onclick = () => { step = 0; renderMatch(); };
+}
+function resultHTML(r, i){
+  const {v, m, s} = r;
+  return `<article class="panel result">
+    <div class="ring" style="--p:${s}" aria-label="Fit score ${s} out of 100"><b>${s}</b></div>
+    <div>
+      <div class="rank">${["Best match", "Runner-up", "Also great"][i]}</div>
+      <h3>${esc(m.make)} ${esc(m.model)} <span class="muted" style="font-weight:500;font-size:16px">${esc(v.variant)}</span></h3>
+      <div style="font-weight:600;margin-top:4px">${priceRange(v.price_min_inr, v.price_max_inr)}</div>
+      <ul>${r.why.map(w => `<li>${esc(w)}</li>`).join("")}${r.con.slice(0, 2).map(c => `<li class="c">${esc(c)}</li>`).join("")}</ul>
+      <div class="acts"><a class="btn sm primary" href="#/car/${m.key}/${esc(v.slug)}">See details</a>
+        <button class="btn sm" data-pick="${esc(v.slug)}">${picked.includes(v.slug) ? "✓ Comparing" : "+ Compare"}</button></div>
+    </div></article>`;
+}
+
+/* ---------- global events ---------- */
+document.addEventListener("click", e => {
+  const f = e.target.closest("[data-f]");
+  if (f){ const p = new URLSearchParams(location.hash.split("?")[1] || ""); setF({[f.dataset.f]: p.get(f.dataset.f) === f.dataset.v ? "" : f.dataset.v}); return; }
+  if (e.target.closest("[data-clear]") || e.target.id === "clear"){ history.replaceState(null, "", "#/"); renderHome(new URLSearchParams()); return; }
+  const pk = e.target.closest("[data-pick]");
+  if (pk){
+    e.preventDefault(); e.stopPropagation();
+    if (!togglePick(pk.dataset.pick)) return;
+    const on = picked.includes(pk.dataset.pick);
+    if (pk.hasAttribute("data-rerender")) route();
+    else { pk.classList.toggle("on", on); pk.setAttribute("aria-pressed", on); if (pk.classList.contains("pill")) pk.textContent = on ? "✓ Comparing" : "+ Compare"; else pk.textContent = on ? "✓ Comparing" : "+ Compare"; }
+    return;
+  }
+  const un = e.target.closest("[data-unpick]");
+  if (un){
+    picked = picked.filter(s => s !== un.dataset.unpick); savePicked();
+    if (location.hash.startsWith("#/compare")) location.hash = "#/compare/" + picked.join(",");
+    else route();
+    return;
+  }
+  const go = e.target.closest("[data-go]");
+  if (go){ history.replaceState(null, "", go.dataset.go); route(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && !/input|select|textarea/i.test(document.activeElement.tagName)){
+    const q = $("#q"); if (q){ e.preventDefault(); q.focus(); q.scrollIntoView({block: "center", behavior: "smooth"}); }
+  }
+});
+
+app.innerHTML = `<section class="hero"><div class="skeleton" style="height:220px;margin-bottom:20px"></div><div class="grid">${"<div class='skeleton'></div>".repeat(6)}</div></section>`;
+load().then(() => { lastPath = location.hash.split("?")[0]; route(); })
+  .catch(err => { app.innerHTML = `<div class="empty" style="margin-top:40px">We couldn't load the cars right now. Please refresh in a moment.<br><span class="faint">${esc(err.message)}</span></div>`; });
 </script>
 </body>
 </html>

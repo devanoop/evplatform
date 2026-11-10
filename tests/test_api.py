@@ -10,7 +10,7 @@ def test_api_end_to_end(session, monkeypatch):
     c = TestClient(app)
     assert c.get("/health").json() == {"status": "ok"}
     home = c.get("/")
-    assert home.status_code == 200 and "EV Finder India" in home.text
+    assert home.status_code == 200 and "Kilowise" in home.text
 
     page = c.get("/vehicles", params={"market": "IN", "max_price_inr": 1_500_000, "min_range_km": 400}).json()
     assert page["total"] >= 1

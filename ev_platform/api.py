@@ -122,7 +122,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="EV Specs API",
+    title="Kilowise API",
     version="0.1.0",
     description="Specifications of every electric car on sale in India, with the source of every field.",
     lifespan=lifespan,

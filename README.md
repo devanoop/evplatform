@@ -1,4 +1,7 @@
-# EV Specs Platform
+# Kilowise
+
+Every EV in India, honestly compared. Brand and design notes are in [BRAND.md](BRAND.md).
+
 
 Data layer and API for an Indian EV buyer platform: collects electric-car specs from open data
 and official sources, keeps the source of every number, and serves them over a REST API.
@@ -36,10 +39,19 @@ Known caveats:
 
 ## Web app
 
-Open the service's main URL (`/`) for EV Finder India: browse every car, filter by brand, body
-type, price and range, open a car for full specs and sources, and compare up to 4 side by side.
+Open the service's main URL (`/`) for Kilowise:
+
+* **Explore**: every EV as a card with real-world range, battery and running cost per km. One-tap
+  chips for budget, body type, 7 seats, real-world range and fast charging; search with `/`.
+* **Find my EV**: five one-tap questions (budget, daily km, home charging, passengers, highway trips)
+  give three ranked matches with a fit score, why each fits and honest concerns.
+* **Car page**: versions as a toggle, real-world range, fast-charge time, and a running-cost
+  calculator (km/day, electricity and petrol price) with 5-year fuel savings. Every source is linked.
+* **Compare** up to 4 versions; the best figure in each row is marked and the link can be shared.
+
 It is one static page (`ev_platform/web/index.html`) that calls the API below, so it deploys with
-the API and needs no build step. Filters are kept in the URL, so a filtered view can be shared.
+the API and needs no build step. Real-world range applies a factor per range test (MIDC P1 0.68 up
+to Tata C75 0.95, in `REAL`), and running cost assumes 92% usable battery and 10% charging loss.
 
 ## API
 
