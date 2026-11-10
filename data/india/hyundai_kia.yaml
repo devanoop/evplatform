@@ -1,0 +1,61 @@
+models:
+  - make: Hyundai
+    model: Creta Electric
+    body_type: compact SUV
+    price_lakh: [18.03, 25.22]
+    source_url: https://www.carwale.com/hyundai-cars/creta-electric/
+    drivetrain: FWD
+    dc_charge_max_kw: 50
+    dc_charge_time_note: "10-80% in 58 min"
+    variants:
+      - {variant: 42 kWh, battery_kwh: 42, range_km: 390, range_standard: MIDC, power_hp: 133, torque_nm: 255}
+      - {variant: 51.4 kWh, battery_kwh: 51.4, range_km: 473, range_standard: MIDC, power_hp: 169, torque_nm: 255}
+
+  - make: Hyundai
+    model: Ioniq 5
+    body_type: crossover
+    price_lakh: [55.71, null]
+    source_url: https://www.carwale.com/hyundai-cars/ioniq-5/
+    variants:
+      - {variant: 84 kWh RWD, battery_kwh: 84, range_km: 690, range_standard: ARAI, power_hp: 225, drivetrain: RWD, dc_charge_max_kw: 350, ac_charge_max_kw: 11}
+
+  - make: Kia
+    model: Syros EV
+    body_type: compact SUV
+    price_lakh: [13.50, 20.00]
+    source_url: https://www.carwale.com/kia-cars/syros-ev/
+    dc_charge_max_kw: 100
+    dc_charge_time_note: "10-80% in 39 min"
+    ac_charge_max_kw: 11
+    variants:
+      - {variant: 42 kWh, battery_kwh: 42, range_km: 443, range_standard: MIDC, torque_nm: 255, note: "Source lists an implausible 35 bhp for this pack; left blank."}
+      - {variant: 51.4 kWh, battery_kwh: 51.4, range_km: 526, range_standard: MIDC, power_hp: 170, torque_nm: 255}
+
+  - make: Kia
+    model: Carens Clavis EV
+    body_type: MPV
+    price_lakh: [18.04, 25.00]
+    source_url: https://www.carwale.com/kia-cars/carens-clavis-ev/
+    drivetrain: FWD
+    dc_charge_max_kw: 100
+    dc_charge_time_note: "10-80% in 39 min"
+    ac_charge_max_kw: 11
+    variants:
+      - {variant: 42 kWh, battery_kwh: 42, range_km: 404, range_standard: ARAI, power_hp: 133, torque_nm: 255}
+      - {variant: 51.4 kWh, battery_kwh: 51.4, range_km: 490, range_standard: claimed, power_hp: 169, torque_nm: 255}
+
+  - make: Kia
+    model: EV6
+    body_type: crossover
+    price_lakh: [65.98, null]
+    source_url: https://www.carwale.com/kia-cars/ev6/
+    variants:
+      - {variant: GT Line 84 kWh AWD, battery_kwh: 84, range_km: 663, range_standard: ARAI, power_hp: 321, torque_nm: 605, drivetrain: AWD, dc_charge_time_note: "10-80% in 18 min on a 350 kW charger"}
+
+  - make: Kia
+    model: EV9
+    body_type: 3-row SUV
+    price_crore: [1.30, null]
+    source_url: https://www.carwale.com/kia-cars/ev9/
+    variants:
+      - {variant: GT-Line 99.8 kWh AWD, battery_kwh: 99.8, range_km: 561, range_standard: ARAI, power_hp: 379, torque_nm: 700, drivetrain: AWD, dc_charge_time_note: "10-80% in 24 min on a 350 kW charger"}

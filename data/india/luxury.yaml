@@ -1,0 +1,202 @@
+models:
+  - make: Mercedes-Benz
+    model: CLA EV
+    body_type: sedan
+    source_url: https://www.carwale.com/mercedes-benz-cars/cla-ev/
+    ac_charge_max_kw: 11
+    variants:
+      - {variant: 200 58 kWh, battery_kwh: 58, range_km: 542, range_standard: ARAI, power_hp: 221, dc_charge_max_kw: 200, price_lakh: [56.50, null]}
+      - {variant: 250+ 85.5 kWh, battery_kwh: 85.5, range_km: 792, range_standard: WLTP, power_hp: 268, torque_nm: 335, drivetrain: RWD, dc_charge_max_kw: 320, price_lakh: [60.50, 64.00], price_note: "Rs 64 lakh is the Launch Edition."}
+  - make: Mercedes-Benz
+    model: EQE SUV
+    body_type: SUV
+    price_crore: [1.41, null]
+    source_url: https://www.carwale.com/mercedes-benz-cars/eqe-suv/
+    variants:
+      - {variant: 500 4MATIC, battery_kwh: 90.56, range_km: 550, range_standard: ARAI, power_hp: 402, drivetrain: AWD}
+  - make: Mercedes-Benz
+    model: EQS
+    body_type: sedan
+    price_crore: [1.30, null]
+    source_url: https://www.carwale.com/mercedes-benz-cars/eqs/
+    variants:
+      - {variant: 580 4MATIC, battery_kwh: 107.8, range_km: 857, range_standard: ARAI, power_hp: 536, drivetrain: AWD}
+  - make: Mercedes-Benz
+    model: AMG EQS
+    body_type: sedan
+    price_crore: [2.45, null]
+    source_url: https://www.carwale.com/mercedes-benz-cars/amg-eqs/
+    variants:
+      - {variant: 53 4MATIC+, battery_kwh: 107.8, range_km: 526, range_standard: ARAI, power_hp: 751, drivetrain: AWD}
+  - make: Mercedes-Benz
+    model: EQS SUV
+    body_type: SUV
+    source_url: https://www.carwale.com/mercedes-benz-cars/eqs-suv/
+    variants:
+      - {variant: "450", battery_kwh: 122, range_km: 650, range_standard: claimed, power_hp: 355, price_crore: [1.34, null]}
+      - {variant: 580 4MATIC, battery_kwh: 122, range_km: 809, range_standard: claimed, power_hp: 536, drivetrain: AWD, price_crore: [1.48, null]}
+  - make: Mercedes-Benz
+    model: Maybach EQS SUV
+    body_type: SUV
+    price_crore: [2.40, 2.65]
+    source_url: https://www.carwale.com/mercedes-benz-cars/maybach-eqs-suv/
+    variants:
+      - {variant: "680", battery_kwh: 122, range_km: 600, range_standard: ARAI, power_hp: 658, drivetrain: AWD}
+  - make: Mercedes-Benz
+    model: G-Class Electric
+    body_type: SUV
+    price_crore: [3.10, null]
+    source_url: https://www.carwale.com/mercedes-benz-cars/g-class-electric/
+    variants:
+      - {variant: G 580 with EQ Technology, battery_kwh: 116, range_km: 473, range_standard: ARAI, power_hp: 587, torque_nm: 1164, drivetrain: AWD, dc_charge_time_note: "10-80% in 32 min on a 200 kW charger"}
+
+  - make: BMW
+    model: iX1 LWB
+    body_type: SUV
+    price_lakh: [52.70, null]
+    source_url: https://www.carwale.com/bmw-cars/ix1-lwb/
+    variants:
+      - {variant: eDrive20L M Sport, battery_kwh: 66.4, range_km: 531, range_standard: ARAI, power_hp: 204, torque_nm: 250, dc_charge_max_kw: 130, ac_charge_max_kw: 11, dc_charge_time_note: "10-80% in 30 min"}
+  - make: BMW
+    model: i5 LWB
+    body_type: sedan
+    price_lakh: [79.60, null]
+    source_url: https://www.carwale.com/bmw-cars/i5-lwb/
+    variants:
+      - {variant: eDrive35L M Sport, battery_kwh: 81.6, range_km: 669, range_standard: ARAI, torque_nm: 410, dc_charge_max_kw: 160, ac_charge_max_kw: 11, note: "Source gives three different power figures (217/264/271 bhp); left blank."}
+  - make: BMW
+    model: i5
+    body_type: sedan
+    price_crore: [1.20, null]
+    source_url: https://www.carwale.com/bmw-cars/i5/
+    variants:
+      - {variant: M60 xDrive, battery_kwh: 83.9, range_km: 516, range_standard: ARAI, power_hp: 601, drivetrain: AWD}
+  - make: BMW
+    model: iX
+    body_type: SUV
+    price_crore: [1.40, null]
+    source_url: https://www.carwale.com/bmw-cars/ix/
+    variants:
+      - {variant: xDrive50, battery_kwh: 111.5, range_km: 635, range_standard: claimed, power_hp: 516, torque_nm: 765, drivetrain: AWD}
+  - make: BMW
+    model: i7
+    body_type: sedan
+    source_url: https://www.carwale.com/bmw-cars/i7/
+    note: "Source gives conflicting range figures (686 km claimed, 728 km WLTP); left blank."
+    variants:
+      - {variant: eDrive50, battery_kwh: 112.5, power_hp: 449, torque_nm: 660, price_crore: [1.95, null]}
+      - {variant: M70 xDrive, battery_kwh: 112.5, power_hp: 671, torque_nm: 1100, drivetrain: AWD, price_crore: [2.65, null]}
+
+  - make: Mini
+    model: Countryman Electric
+    body_type: SUV
+    source_url: https://www.carwale.com/mini-cars/countryman-electric/
+    variants:
+      - {variant: E, battery_kwh: 64.6, range_km: 462, range_standard: claimed, power_hp: 201, drivetrain: FWD, price_lakh: [55.65, 63.20]}
+      - {variant: SE All4, battery_kwh: 64.6, range_km: 440, range_standard: claimed, power_hp: 309, torque_nm: 494, drivetrain: AWD, price_lakh: [67.40, null]}
+
+  - make: Volvo
+    model: EC40
+    body_type: coupe SUV
+    price_lakh: [59.00, null]
+    source_url: https://www.carwale.com/volvo-cars/ec40/
+    variants:
+      - {variant: E80, battery_kwh: 78, range_km: 530, range_standard: ARAI, power_hp: 408, drivetrain: AWD}
+  - make: Volvo
+    model: EX90
+    body_type: 3-row SUV
+    price_crore: [1.26, null]
+    source_url: https://www.carwale.com/volvo-cars/ex90/
+    variants:
+      - {variant: Ultra, battery_kwh: 106, range_km: 625, range_standard: MIDC, power_hp: 462, torque_nm: 670, drivetrain: AWD}
+
+  - make: Audi
+    model: Q8 e-tron
+    body_type: SUV
+    source_url: https://www.carwale.com/audi-cars/q8-e-tron/
+    drivetrain: AWD
+    variants:
+      - {variant: "50", battery_kwh: 95, range_km: 491, range_standard: ARAI, power_hp: 335, price_crore: [1.15, null]}
+      - {variant: "55", battery_kwh: 114, range_km: 582, range_standard: ARAI, power_hp: 402, price_crore: [1.27, null]}
+  - make: Audi
+    model: Q8 Sportback e-tron
+    body_type: coupe SUV
+    source_url: https://www.carwale.com/audi-cars/q8-sportback-e-tron/
+    drivetrain: AWD
+    variants:
+      - {variant: "50", battery_kwh: 95, power_hp: 335, price_crore: [1.19, null]}
+      - {variant: "55", battery_kwh: 114, power_hp: 402, price_crore: [1.32, null]}
+  - make: Audi
+    model: e-tron GT
+    body_type: sedan
+    source_url: https://www.carwale.com/audi-cars/e-tron-gt/
+    variants:
+      - {variant: S, battery_kwh: 93.4, range_km: 388, range_standard: ARAI, power_hp: 523, price_crore: [1.72, null]}
+      - {variant: RS, battery_kwh: 93.4, range_km: 401, range_standard: ARAI, power_hp: 637, price_crore: [1.95, null]}
+
+  - make: Porsche
+    model: Macan Electric
+    body_type: SUV
+    source_url: https://www.carwale.com/porsche-cars/macan-electric/
+    variants:
+      - {variant: Base, battery_kwh: 100, power_hp: 402, price_crore: [1.22, null]}
+      - {variant: 4S, battery_kwh: 100, power_hp: 510, price_crore: [1.63, null]}
+      - {variant: Turbo, battery_kwh: 100, power_hp: 630, price_crore: [1.78, null]}
+  - make: Porsche
+    model: Taycan
+    body_type: sedan
+    source_url: https://www.carwale.com/porsche-cars/taycan/
+    drivetrain: AWD
+    variants:
+      - {variant: 4S, battery_kwh: 79.2, power_hp: 590, price_crore: [2.01, 2.09], price_note: "Rs 2.09 crore is the Black Edition."}
+      - {variant: Turbo, battery_kwh: 93.4, power_hp: 872, price_crore: [2.74, null]}
+  - make: Porsche
+    model: Cayenne Electric
+    body_type: SUV
+    source_url: https://www.carwale.com/porsche-cars/cayenne-electric/
+    drivetrain: AWD
+    dc_charge_max_kw: 400
+    ac_charge_max_kw: 11
+    variants:
+      - {variant: Base, battery_kwh: 113, range_km: 642, range_standard: claimed, power_kw: 325, torque_nm: 835, price_crore: [1.77, null]}
+      - {variant: Turbo, battery_kwh: 113, range_km: 623, range_standard: claimed, power_kw: 850, torque_nm: 1500, price_crore: [2.28, null]}
+
+  - make: Lexus
+    model: ES 500e
+    body_type: sedan
+    price_lakh: [89.99, null]
+    source_url: https://www.carwale.com/lexus-cars/es-500e/
+    variants:
+      - {variant: AWD, battery_kwh: 74.68, range_km: 580, range_standard: ARAI, power_hp: 338, torque_nm: 437, drivetrain: AWD, dc_charge_max_kw: 150, ac_charge_max_kw: 11}
+
+  - make: Lotus
+    model: Emeya
+    body_type: sedan
+    price_crore: [2.34, null]
+    source_url: https://www.carwale.com/lotus-cars/emeya/
+    variants:
+      - {variant: GT, battery_kwh: 102, range_km: 610, range_standard: ARAI, power_hp: 905, drivetrain: AWD}
+  - make: Lotus
+    model: Eletre
+    body_type: SUV
+    source_url: https://www.carwale.com/lotus-cars/eletre/
+    drivetrain: AWD
+    variants:
+      - {variant: Base, battery_kwh: 112, range_km: 600, range_standard: claimed, power_hp: 603, torque_nm: 710, price_crore: [2.55, null]}
+      - {variant: S, battery_kwh: 112, range_km: 600, range_standard: claimed, power_hp: 603, torque_nm: 710, price_crore: [2.75, null]}
+      - {variant: R, battery_kwh: 112, range_km: 490, range_standard: claimed, power_hp: 905, torque_nm: 985, price_crore: [2.99, null]}
+
+  - make: Rolls-Royce
+    model: Spectre
+    body_type: coupe
+    source_url: https://www.carwale.com/rolls-royce-cars/spectre/
+    variants:
+      - {variant: Coupe, battery_kwh: 102, range_km: 530, range_standard: ARAI, power_hp: 577, price_crore: [7.50, null]}
+      - {variant: Black Badge, battery_kwh: 102, range_km: 530, range_standard: ARAI, power_hp: 650, price_crore: [9.50, null]}
+
+# Left out on purpose:
+#  * Audi e-tron and e-tron Sportback: still listed by CarWale but superseded by the Q8 e-tron
+#    models above (same cars, renamed in 2023).
+#  * Mini Cooper SE: CarWale marks it discontinued.
+#  * Volvo EX30/EX40, Mercedes EQA/EQB, BMW i4, Hyundai Kona: not in CarWale's on-sale list
+#    on 2026-11-10. Re-check and add if they are still sold.

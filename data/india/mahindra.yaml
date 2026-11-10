@@ -1,0 +1,56 @@
+make: Mahindra
+models:
+  - model: XUV 3XO EV
+    body_type: compact SUV
+    price_lakh: [13.89, 15.46]
+    source_url: https://www.carwale.com/mahindra-cars/xuv-3xo-ev/
+    other_sources: [https://www.autocarpro.in/news/mahindra-launches-xuv-3xo-electric-suv-starting-at-₹1389-lakh-130449]
+    variants:
+      - {variant: 39.4 kWh, battery_kwh: 39.4, range_km: 285, range_standard: "claimed real-world", power_kw: 110, torque_nm: 310, drivetrain: FWD, dc_charge_max_kw: 50, ac_charge_max_kw: 7.2, dc_charge_time_note: "to 80% in 50 min"}
+
+  - model: XUV400
+    body_type: SUV
+    price_lakh: [15.49, 17.69]
+    source_url: https://www.cardekho.com/india-car-news/8-massmarket-evs-you-can-bring-home-by-diwali-2025-34925.htm
+    other_sources: [https://www.carwale.com/mahindra-cars/xuv400/]
+    dc_charge_max_kw: 50
+    ac_charge_max_kw: 7.2
+    note: "Being replaced by the XUV 3XO EV; check availability."
+    variants:
+      - {variant: EC Pro 34.5 kWh, battery_kwh: 34.5, range_km: 375, range_standard: "MIDC P1", power_ps: 150, torque_nm: 310}
+      - {variant: EL Pro 39.5 kWh, battery_kwh: 39.5, range_km: 456, range_standard: "MIDC P1", power_ps: 150, torque_nm: 310}
+
+  - model: BE 6
+    body_type: coupe SUV
+    price_lakh: [19.45, 27.70]
+    source_url: https://www.carwale.com/mahindra-cars/be-6/
+    other_sources: [https://www.carwale.com/mahindra-cars/be-6-sporteq/]
+    battery_chemistry: LFP
+    drivetrain: RWD
+    note: "BE 6 Sporteq is a trim of the same car (interior changes, triple screen), same powertrains."
+    variants:
+      - {variant: 59 kWh, battery_kwh: 59, range_km: 573, range_standard: MIDC, power_hp: 228, torque_nm: 360, dc_charge_max_kw: 140, ac_charge_max_kw: 11.2}
+      - {variant: 70 kWh, battery_kwh: 70, range_km: 651, range_standard: MIDC, power_hp: 241, torque_nm: 360, dc_charge_max_kw: 160, ac_charge_max_kw: 11.2}
+      - {variant: 79 kWh, battery_kwh: 79, range_km: 708, range_standard: MIDC, power_hp: 282, torque_nm: 360, dc_charge_max_kw: 180, ac_charge_max_kw: 11.2}
+
+  - model: XEV 9e
+    body_type: coupe SUV
+    price_lakh: [21.90, 31.25]
+    source_url: https://www.carwale.com/mahindra-cars/xev-9e/
+    other_sources: [https://www.cardekho.com/india-car-news/mahindra-xev-9e-and-be-6e-launched-in-india-prices-start-from-rs-1890-lakh-33567.htm]
+    battery_chemistry: LFP
+    drivetrain: RWD
+    variants:
+      - {variant: 59 kWh, battery_kwh: 59, range_km: 542, range_standard: "MIDC P1+P2", power_hp: 228, torque_nm: 380, dc_charge_max_kw: 140, dc_charge_time_note: "20-80% in 20 min"}
+      - {variant: 79 kWh, battery_kwh: 79, range_km: 656, range_standard: "MIDC P1+P2", power_hp: 282, torque_nm: 380, dc_charge_max_kw: 180, ac_charge_max_kw: 11.2, dc_charge_time_note: "20-80% in 20 min"}
+
+  - model: XEV 9S
+    body_type: 3-row SUV
+    price_lakh: [20.65, 30.90]
+    source_url: https://www.carwale.com/mahindra-cars/xev-9s/
+    other_sources: [https://compareev.in/electric-cars]
+    battery_chemistry: LFP
+    variants:
+      - {variant: 59 kWh, battery_kwh: 59, range_km: 521, range_standard: claimed, power_hp: 228, torque_nm: 380, dc_charge_max_kw: 140, note: "Range from compareev.in; CarWale does not state it."}
+      - {variant: 70 kWh, battery_kwh: 70, power_hp: 241, torque_nm: 380, dc_charge_max_kw: 160}
+      - {variant: 79 kWh, battery_kwh: 79, range_km: 679, range_standard: claimed, power_hp: 282, torque_nm: 380, drivetrain: RWD, dc_charge_max_kw: 180}

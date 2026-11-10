@@ -12,9 +12,14 @@ class Settings(BaseSettings):
     # Railway's Postgres plugin exposes DATABASE_URL. Locally we fall back to SQLite.
     database_url: str = "sqlite:///./ev_platform.db"
 
+    # The market this deployment serves. Country versions (later) run as separate deployments
+    # with their own MARKET and sources.
+    market: str = "IN"
+
     # Comma-separated list of sources the ingest job runs, in merge-priority order
-    # (later sources only fill fields that earlier ones left empty).
-    ingest_sources: str = "india_curated,oem_pages,open_ev_data,wikidata"
+    # (later sources only fill fields that earlier ones left empty). open_ev_data and wikidata
+    # are global sources kept for future country versions; they are off for India.
+    ingest_sources: str = "india_curated,oem_pages"
 
     # Polite crawling settings for any source that fetches web pages.
     http_user_agent: str = "EVPlatformSpecsBot/0.1 (+https://example.com/bot)"

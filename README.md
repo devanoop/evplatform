@@ -6,23 +6,33 @@ Built to run on Railway (Docker + Postgres + cron), but any container host works
 
 ## What's in it
 
-| Source | What it gives | License / rules | Default |
-|---|---|---|---|
-| `india_curated` | Hand-checked specs for the 10-car India launch list (17 variants), a cited URL on every model | facts compiled by hand | on |
-| `oem_pages` | Official manufacturer spec pages, turned into structured data by Claude | allowlist in `data/oem_pages.yaml`, robots.txt enforced, terms checked by a human before enabling | needs `ANTHROPIC_API_KEY`; all pages start disabled |
-| `open_ev_data` | ~1,270 mostly EU/US EVs: usable battery, efficiency, AC/DC charging | MIT with attribution (Open EV Data) | on |
-| `wikidata` | Discovery of electric car models worldwide, battery/range where editors filled them | CC0 | on |
+India only for now. Every electric car listed as on sale in India on 2026-11-10: 59 models and
+101 variants across 20 brands, from the Tata Tiago EV to the Rolls-Royce Spectre.
+Other countries will be separate deployments later (set `MARKET` and their own sources).
+
+| Source | What it gives | Default |
+|---|---|---|
+| `india_curated` | `data/india/*.yaml`, one file per brand group, a cited source URL on every model | on |
+| `oem_pages` | Official manufacturer spec pages, turned into structured data by Claude. Allowlist in `data/oem_pages.yaml`, robots.txt enforced, terms checked by a human before enabling | on, but needs `ANTHROPIC_API_KEY` and every page starts disabled |
+| `open_ev_data`, `wikidata` | Global datasets kept for future country versions | off |
 
 Each field on a vehicle is merged from the highest-priority source that has it (order of
 `INGEST_SOURCES`), and `field_sources` says which source won. `GET /vehicles/{slug}` returns
 the raw record from every source, with URL, license and fetch time.
 
-Known data caveats:
-* Open EV Data has no Tata, Mahindra or Maruti models, and its file was last updated April 2025.
-  About 40% of its rows copy the battery size into DC charge power as a placeholder; those values
-  are dropped on import.
-* Indian prices change often and some brands sell with battery rental (BaaS). Check `price_note`.
-* Range standards differ (MIDC P1, MIDC P1+P2, ARAI, claimed real-world). `range_standard` says which.
+Coverage of the India data: battery size and price for every variant, range for 90 of 101,
+power for 93, torque for 67, DC charging power for 48. Gaps are where the cited source didn't
+state a value or contradicted itself; those cases carry an `extra.note`.
+
+Known caveats:
+* Prices change often. Where a source gives only a model-level range, every variant carries
+  that range, so filter on `price_min_inr` with care. Several brands also sell with battery
+  rental (BaaS), described in `price_note` or `extra.note`.
+* Range standards differ (MIDC P1, MIDC P1+P2, MIDC, ARAI, WLTP, CLTC, Tata's C75, or claimed).
+  `range_standard` says which, so compare like with like.
+* The specs were compiled from CarWale model pages and launch coverage (Autocar India, CarDekho,
+  91Wheels). Those pages often contradict themselves, so figures tied to a named test standard
+  were preferred and conflicting ones left blank. Re-verify before publishing buyer advice.
 
 ## API
 
@@ -67,8 +77,8 @@ market, make, price and range. Ingestion is a separate job, so it never slows th
 
 ## Adding data
 
-* **A new Indian car**: add it to `data/india_curated.yaml` with a `source_url`. Only enter
-  numbers the source states; leave the rest out.
+* **A new Indian car**: add it to the right file in `data/india/` with a `source_url`. Only enter
+  numbers the source states; leave the rest out. See `data/india/_README.md`.
 * **A manufacturer page**: add it to `data/oem_pages.yaml`, read the site's terms, fill in
   `terms_checked_on`, then set `enabled: true`.
 * **A new source**: write a class with `name`, `license` and a `fetch()` that yields

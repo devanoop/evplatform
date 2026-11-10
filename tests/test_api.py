@@ -14,8 +14,8 @@ def test_api_end_to_end(session, monkeypatch):
     assert page["total"] >= 1
     assert all(v["range_km"] >= 400 and v["price_min_inr"] <= 1_500_000 for v in page["items"])
 
-    cheapest = c.get("/vehicles", params={"market": "IN", "sort": "price", "limit": 1}).json()["items"][0]
-    assert cheapest["make"] == "MG"
+    cheapest = c.get("/vehicles", params={"sort": "price", "limit": 1}).json()["items"][0]
+    assert cheapest["model"] == "Tiago EV"  # market defaults to IN
 
     detail = c.get("/vehicles/in-tata-nexon-ev-45-kwh").json()
     assert detail["records"][0]["source"] == "india_curated"

@@ -1,0 +1,111 @@
+models:
+  - make: Maruti Suzuki
+    model: e Vitara
+    body_type: compact SUV
+    price_lakh: [16.19, 20.21]
+    price_note: "With battery. Battery-as-a-Service from Rs 10.99 lakh plus Rs 3.99/km rental."
+    source_url: https://www.autocarindia.com/car-news-amp/maruti-launches-e-vitara-at-rs-1099-lakh-battery-rental-extra-438538
+    other_sources: [https://www.carwale.com/maruti-suzuki-cars/e-vitara/]
+    drivetrain: FWD
+    dc_charge_max_kw: 70
+    ac_charge_max_kw: 7.4
+    dc_charge_time_note: "10-80% in about 45 min"
+    variants:
+      - {variant: 49 kWh, battery_kwh: 49, range_km: 440, range_standard: ARAI, power_hp: 144, torque_nm: 189}
+      - {variant: 61 kWh, battery_kwh: 61, range_km: 543, range_standard: ARAI, power_hp: 174, torque_nm: 189}
+
+  - make: Toyota
+    model: Urban Cruiser Ebella
+    body_type: compact SUV
+    price_lakh: [23.60, 23.80]
+    source_url: https://www.carwale.com/toyota-cars/urban-cruiser-ebella/
+    variants:
+      - {variant: 61 kWh, battery_kwh: 61, range_km: 543, range_standard: ARAI, power_hp: 172, torque_nm: 189, dc_charge_time_note: "10-80% in 45 min"}
+
+  - make: Citroen
+    model: eC3 X
+    body_type: hatchback
+    price_lakh: [12.09, 13.36]
+    source_url: https://www.carwale.com/citroen-cars/ec3-x/
+    note: "BaaS pricing also offered."
+    variants:
+      - {variant: 29.2 kWh, battery_kwh: 29.2, range_km: 320, range_standard: ARAI, power_hp: 56, torque_nm: 143, dc_charge_time_note: "10-80% in 57 min"}
+
+  - make: BYD
+    model: Atto 3
+    body_type: SUV
+    price_lakh: [24.99, 34.49]
+    source_url: https://www.carwale.com/byd-cars/atto-3/
+    battery_chemistry: LFP
+    drivetrain: FWD
+    variants:
+      - {variant: Dynamic 49.92 kWh, battery_kwh: 49.92, range_km: 468, range_standard: claimed, power_hp: 201, torque_nm: 310}
+      - {variant: Premium 60.48 kWh, battery_kwh: 60.48, range_km: 521, range_standard: claimed, power_hp: 201, torque_nm: 310}
+
+  - make: BYD
+    model: eMax 7
+    body_type: MPV
+    source_url: https://www.carwale.com/byd-cars/emax-7/
+    battery_chemistry: LFP
+    drivetrain: FWD
+    dc_charge_max_kw: 115
+    variants:
+      - {variant: Premium 55.4 kWh, battery_kwh: 55.4, range_km: 420, range_standard: ARAI, power_hp: 161, torque_nm: 310, price_lakh: [26.90, 27.50]}
+      - {variant: Comfort 71.8 kWh, battery_kwh: 71.8, range_km: 485, range_standard: claimed, power_hp: 161, torque_nm: 310, price_lakh: [27.90, 28.30]}
+      - {variant: Superior 71.8 kWh, battery_kwh: 71.8, range_km: 530, range_standard: claimed, power_hp: 201, torque_nm: 310, price_lakh: [29.30, 29.90]}
+
+  - make: BYD
+    model: Seal
+    body_type: sedan
+    source_url: https://www.carwale.com/byd-cars/seal/
+    battery_chemistry: LFP
+    variants:
+      - {variant: Dynamic 61.44 kWh, battery_kwh: 61.44, range_km: 510, range_standard: claimed, power_hp: 201, drivetrain: RWD, price_lakh: [41.50, null]}
+      - {variant: Premium 82.56 kWh, battery_kwh: 82.56, range_km: 650, range_standard: claimed, power_hp: 308, drivetrain: RWD, price_lakh: [46.20, null]}
+      - {variant: Performance 82.56 kWh AWD, battery_kwh: 82.56, range_km: 580, range_standard: claimed, power_hp: 523, drivetrain: AWD, price_lakh: [53.65, null]}
+
+  - make: BYD
+    model: Sealion 7
+    body_type: coupe SUV
+    price_lakh: [41.90, 55.90]
+    source_url: https://www.carwale.com/byd-cars/sealion-7/
+    battery_chemistry: LFP
+    dc_charge_max_kw: 150
+    variants:
+      - {variant: Dynamic 71.8 kWh, battery_kwh: 71.8, range_km: 520, range_standard: ARAI, ac_charge_max_kw: 7, note: "Source gives conflicting power figures; left blank."}
+      - {variant: Premium 82.56 kWh, battery_kwh: 82.56, range_km: 567, range_standard: claimed, power_hp: 308, torque_nm: 380, drivetrain: RWD, ac_charge_max_kw: 11}
+      - {variant: Performance 82.56 kWh AWD, battery_kwh: 82.56, range_km: 542, range_standard: claimed, power_hp: 523, torque_nm: 690, drivetrain: AWD, ac_charge_max_kw: 11}
+
+  - make: VinFast
+    model: VF 6
+    body_type: coupe SUV
+    price_lakh: [18.19, 20.09]
+    source_url: https://www.carwale.com/vinfast-cars/vf-6/
+    variants:
+      - {variant: 59.6 kWh, battery_kwh: 59.6, range_km: 468, range_standard: claimed, dc_charge_max_kw: 100, ac_charge_max_kw: 7.2, dc_charge_time_note: "10-70% in 25 min", note: "Offered with 175 bhp/250 Nm or 201 bhp/310 Nm (463 km ARAI); source doesn't map them to trims."}
+
+  - make: VinFast
+    model: VF 7
+    body_type: SUV
+    price_lakh: [22.99, 28.09]
+    source_url: https://www.carwale.com/vinfast-cars/vf-7/
+    variants:
+      - {variant: Earth 59.6 kWh, battery_kwh: 59.6, range_km: 438, range_standard: ARAI, power_hp: 175, torque_nm: 250, dc_charge_max_kw: 100}
+      - {variant: 70.8 kWh FWD, battery_kwh: 70.8, range_km: 510, range_standard: claimed, power_hp: 201, torque_nm: 310, dc_charge_max_kw: 110}
+      - {variant: 70.8 kWh AWD, battery_kwh: 70.8, range_km: 532, range_standard: MIDC, power_hp: 349, torque_nm: 500, drivetrain: AWD, dc_charge_max_kw: 110}
+
+  - make: VinFast
+    model: VF MPV 7
+    body_type: MPV
+    price_lakh: [24.49, null]
+    source_url: https://www.carwale.com/vinfast-cars/vf-mpv-7/
+    variants:
+      - {variant: 60.13 kWh, battery_kwh: 60.13, range_km: 517, range_standard: ARAI, power_hp: 201, torque_nm: 280, drivetrain: FWD, dc_charge_max_kw: 80, ac_charge_max_kw: 6.9}
+
+  - make: Tesla
+    model: Model Y
+    body_type: SUV
+    source_url: https://www.carwale.com/tesla-cars/model-y/
+    variants:
+      - {variant: Premium RWD, battery_kwh: 60, range_km: 500, range_standard: claimed, power_hp: 235, drivetrain: RWD, dc_charge_max_kw: 175, price_lakh: [50.90, null]}
+      - {variant: L Premium AWD, battery_kwh: 88, range_km: 681, range_standard: WLTP, drivetrain: AWD, price_lakh: [61.99, null]}

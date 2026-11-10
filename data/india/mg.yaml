@@ -1,0 +1,46 @@
+make: MG
+models:
+  - model: Comet EV
+    body_type: hatchback
+    price_lakh: [7.90, 10.17]
+    source_url: https://www.carwale.com/mg-cars/comet-ev/
+    note: "No DC fast charging. BaaS pricing also offered."
+    variants:
+      - {variant: 17.3 kWh, battery_kwh: 17.3, range_km: 230, range_standard: ARAI, power_hp: 41, torque_nm: 110, ac_charge_max_kw: 7.4}
+
+  - model: Windsor EV
+    body_type: crossover
+    battery_chemistry: LFP
+    source_url: https://www.autocarindia.com/car-news-amp/mg-windsor-ev-pro-price-starts-at-rs-1749-lakh-435271
+    other_sources: [https://www.carwale.com/mg-cars/windsor-ev/]
+    variants:
+      - {variant: 38 kWh, battery_kwh: 38, range_km: 332, range_standard: ARAI, power_ps: 136, torque_nm: 200, drivetrain: FWD, ac_charge_max_kw: 3.3, price_lakh: [14.85, 19.15], price_note: "Range quoted for the Windsor line-up; BaaS pricing also offered."}
+      - {variant: Pro 52.9 kWh, battery_kwh: 52.9, range_km: 449, range_standard: ARAI, power_ps: 136, torque_nm: 200, drivetrain: FWD, dc_charge_max_kw: 60, ac_charge_max_kw: 7.4, dc_charge_time_note: "20-80% in 50 min", price_lakh: [17.49, null], price_note: "From Rs 12.49 lakh with BaaS."}
+
+  - model: ZS EV
+    body_type: SUV
+    price_lakh: [17.99, 20.75]
+    source_url: https://www.carwale.com/mg-cars/zs-ev/
+    variants:
+      - {variant: 50.3 kWh, battery_kwh: 50.3, range_km: 461, range_standard: ARAI}
+
+  - model: Hector Tomahawk EV
+    body_type: 3-row SUV
+    price_lakh: [20.25, 24.25]
+    source_url: https://www.carwale.com/mg-cars/hector-tomahawk-ev/
+    variants:
+      - {variant: 69.2 kWh, battery_kwh: 69.2, range_km: 517, range_standard: MIDC, power_hp: 201, torque_nm: 310, drivetrain: FWD, ac_charge_max_kw: 7.4, dc_charge_time_note: "30-80% in 35 min on a 90 kW charger"}
+
+  - model: M9
+    body_type: MPV
+    price_lakh: [79.95, 84.94]
+    source_url: https://www.carwale.com/mg-cars/m9/
+    variants:
+      - {variant: 90 kWh, battery_kwh: 90, range_km: 548, range_standard: MIDC, power_hp: 241, torque_nm: 350, drivetrain: FWD, dc_charge_max_kw: 160, ac_charge_max_kw: 11}
+
+  - model: Cyberster
+    body_type: roadster
+    price_lakh: [82.50, 87.49]
+    source_url: https://www.carwale.com/mg-cars/cyberster/
+    variants:
+      - {variant: 77 kWh AWD, battery_kwh: 77, range_km: 580, range_standard: CLTC, power_hp: 503, torque_nm: 725, drivetrain: AWD, dc_charge_max_kw: 144, dc_charge_time_note: "10-80% in 40 min"}

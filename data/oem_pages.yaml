@@ -5,8 +5,8 @@
 #   2. Check robots.txt (the fetcher also enforces it on every run).
 #   3. Fill in terms_checked_on and terms_note, then set enabled: true.
 #
-# The variant names Claude returns must line up with india_curated.yaml for the values to
-# merge onto the same rows; otherwise they appear as separate IN variants for review.
+# The variant names Claude returns must line up with the curated data for the values to
+# merge onto the same rows (data/india/*.yaml); otherwise they appear as separate variants for review.
 #
 # The URLs below are starting points: confirm each one still resolves to the spec page.
 # All entries start disabled: none of these sites' terms had been reviewed when this was written.

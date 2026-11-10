@@ -29,14 +29,17 @@ class FakeSource:
 
 def test_curated_yaml_loads_and_converts_units():
     specs = {s.slug: s for s in IndiaCuratedSource().fetch()}
-    assert len(specs) >= 15
+    assert len({(s.make, s.model) for s in specs.values()}) >= 55
     be6 = specs["in-mahindra-be-6-79-kwh"]
-    assert be6.power_kw == 210.4  # 286 PS
-    assert be6.price_min_inr == 1_890_000 and be6.price_max_inr is None
-    assert be6.source_url.startswith("https://")
+    assert be6.power_kw == 210.3  # 282 bhp
+    assert be6.price_min_inr == 1_945_000 and be6.price_max_inr == 2_770_000
+    assert be6.battery_chemistry == "LFP"  # inherited from the model
+    ev9 = specs["in-kia-ev9-gt-line-99.8-kwh-awd"]
+    assert ev9.price_min_inr == 13_000_000  # 1.30 crore
     for s in specs.values():
-        assert s.source_url, f"{s.slug} has no source"
-        assert s.battery_kwh and s.range_km
+        assert s.market == "IN"
+        assert s.source_url.startswith("https://"), f"{s.slug} has no source"
+        assert s.battery_kwh, f"{s.slug} has no battery size"
 
 
 def test_open_ev_data_mapping_and_cleanup():

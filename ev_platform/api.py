@@ -120,7 +120,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="EV Specs API",
     version="0.1.0",
-    description="Electric vehicle specifications for Indian buyers, with source provenance on every field.",
+    description="Specifications of every electric car on sale in India, with the source of every field.",
     lifespan=lifespan,
 )
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"], allow_headers=["*"])
@@ -154,7 +154,7 @@ _SORTS = {
 @app.get("/vehicles", response_model=Page)
 def list_vehicles(
     db: Session = Depends(get_db),
-    market: str | None = Query(None, description="IN, GLOBAL"),
+    market: str | None = Query(None, description="Defaults to this deployment's MARKET (IN)"),
     make: str | None = None,
     q: str | None = Query(None, description="Search make, model or variant"),
     body_type: str | None = None,
@@ -167,9 +167,7 @@ def list_vehicles(
     limit: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),
 ):
-    stmt = select(Vehicle)
-    if market:
-        stmt = stmt.where(Vehicle.market == market.upper())
+    stmt = select(Vehicle).where(Vehicle.market == (market or get_settings().market).upper())
     if make:
         stmt = stmt.where(func.lower(Vehicle.make) == make.lower())
     if body_type:
@@ -216,17 +214,18 @@ def compare(slugs: str = Query(..., description="Comma-separated slugs, up to 4"
 
 @app.get("/makes")
 def makes(market: str | None = None, db: Session = Depends(get_db)):
-    stmt = select(Vehicle.make, func.count()).group_by(Vehicle.make).order_by(Vehicle.make)
-    if market:
-        stmt = stmt.where(Vehicle.market == market.upper())
+    stmt = (select(Vehicle.make, func.count())
+            .where(Vehicle.market == (market or get_settings().market).upper())
+            .group_by(Vehicle.make).order_by(Vehicle.make))
     return [{"make": m, "variants": n} for m, n in db.execute(stmt)]
 
 
 @app.get("/sources")
 def sources(db: Session = Depends(get_db)):
     counts = dict(db.execute(select(SpecRecord.source, func.count()).group_by(SpecRecord.source)).all())
+    enabled = get_settings().source_list
     return [
-        {"name": name, "license": cls.license, "records": counts.get(name, 0)}
+        {"name": name, "license": cls.license, "enabled": name in enabled, "records": counts.get(name, 0)}
         for name, cls in REGISTRY.items()
     ]
 

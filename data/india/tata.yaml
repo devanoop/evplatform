@@ -1,0 +1,67 @@
+make: Tata
+models:
+  - model: Tiago EV
+    body_type: hatchback
+    price_lakh: [6.99, 10.09]
+    source_url: https://www.cardekho.com/india-car-news/8-massmarket-evs-you-can-bring-home-by-diwali-2025-34925.htm
+    other_sources: [https://www.carwale.com/tata-cars/tiago-ev/]
+    ac_charge_max_kw: 7.2
+    note: "Battery-as-a-Service pricing also offered."
+    variants:
+      - {variant: Medium Range 19.2 kWh, battery_kwh: 19.2, range_km: 223, range_standard: "MIDC P1+P2", power_ps: 61, torque_nm: 110}
+      - {variant: Long Range 24 kWh, battery_kwh: 24, range_km: 293, range_standard: "MIDC P1+P2", power_ps: 75, torque_nm: 114}
+
+  - model: Punch EV
+    body_type: compact SUV
+    price_lakh: [9.79, 12.99]
+    source_url: https://www.carwale.com/tata-cars/punch-ev/
+    dc_charge_max_kw: 65
+    ac_charge_max_kw: 7.2
+    variants:
+      - {variant: 30 kWh, battery_kwh: 30, range_km: 275, range_standard: C75, power_hp: 87, torque_nm: 154}
+      - {variant: 40 kWh, battery_kwh: 40, range_km: 355, range_standard: C75, power_hp: 127, torque_nm: 154}
+
+  - model: Nexon EV
+    body_type: compact SUV
+    price_lakh: [12.49, 17.89]
+    source_url: https://www.carwale.com/tata-cars/nexon-ev/
+    other_sources: [https://www.91wheels.com/news/tata-nexon-ev-gets-bigger-45-kwh-battery-pack-offers-489-km-range-priced-at-rs-13-99-lakh]
+    ac_charge_max_kw: 7.2
+    variants:
+      - {variant: 30 kWh, battery_kwh: 30, power_hp: 127, torque_nm: 215, dc_charge_max_kw: 50, dc_charge_time_note: "10-80% in 56 min", note: "Source gives conflicting range figures (230 and 325 km); left blank."}
+      - {variant: 45 kWh, battery_kwh: 45, range_km: 489, range_standard: claimed, power_hp: 143, torque_nm: 215, dc_charge_max_kw: 60, dc_charge_time_note: "10-80% in 40 min"}
+
+  - model: Curvv EV
+    body_type: coupe SUV
+    price_lakh: [17.19, 19.69]
+    source_url: https://www.carwale.com/tata-cars/curvv-ev/
+    other_sources: [https://www.cardekho.com/india-car-news/8-massmarket-evs-you-can-bring-home-by-diwali-2025-34925.htm]
+    dc_charge_max_kw: 70
+    dc_charge_time_note: "10-80% in 40 min"
+    ac_charge_max_kw: 7.2
+    variants:
+      - {variant: Medium Range 45 kWh, battery_kwh: 45, range_km: 430, range_standard: "MIDC P1", power_ps: 150, torque_nm: 215}
+      - {variant: Long Range 55 kWh, battery_kwh: 55, range_km: 502, range_standard: "MIDC P1", power_ps: 167, torque_nm: 215}
+
+  - model: Harrier EV
+    body_type: SUV
+    price_lakh: [21.79, 30.54]
+    source_url: https://www.cardekho.com/india-car-news/8-massmarket-evs-you-can-bring-home-by-diwali-2025-34925.htm
+    other_sources: [https://www.carwale.com/tata-cars/harrier-ev/]
+    ac_charge_max_kw: 7.2
+    note: "BaaS option lowers upfront price by about Rs 7.3 lakh with a Rs 5.9/km battery rental."
+    variants:
+      - {variant: 65 kWh RWD, battery_kwh: 65, range_km: 538, range_standard: "MIDC P1+P2", power_ps: 238, torque_nm: 315, drivetrain: RWD}
+      - {variant: 75 kWh RWD, battery_kwh: 75, range_km: 627, range_standard: "MIDC P1+P2", drivetrain: RWD}
+      - {variant: 75 kWh AWD, battery_kwh: 75, range_km: 622, range_standard: "MIDC P1+P2", torque_nm: 504, drivetrain: AWD, note: "Dual motor, 158 PS front + 238 PS rear."}
+
+  - model: Sierra EV
+    body_type: SUV
+    price_lakh: [18.79, 26.49]
+    source_url: https://www.carwale.com/tata-cars/sierra-ev/
+    ac_charge_max_kw: 7.2
+    variants:
+      - {variant: 63 kWh, battery_kwh: 63, range_km: 535, range_standard: MIDC, power_hp: 253, torque_nm: 315, note: "440-460 km on Tata's C75 cycle. Recommended DC charger 110 kW."}
+      - {variant: 75 kWh, battery_kwh: 75, range_km: 665, range_standard: MIDC, power_hp: 313, torque_nm: 504, note: "MIDC range is for 2WD; 510-530 km on C75. Dual-motor AWD on Empowered A. Recommended DC charger 120 kW."}
+
+# Not listed on sale on 2026-11-10: Tigor EV, Xpres-T EV (fleet only).
