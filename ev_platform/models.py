@@ -95,3 +95,26 @@ class IngestRun(Base):
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     stats: Mapped[dict] = mapped_column(JSON, default=dict)
     error: Mapped[str | None] = mapped_column(Text)
+
+
+class ModelPhoto(Base):
+    """One freely licensed photo per car model (not per variant), with what's needed to credit it.
+
+    status is "ok" (photo found), "none" (searched, nothing usable) or "blocked" (a human said
+    not to use any photo for this model)."""
+
+    __tablename__ = "model_photos"
+    __table_args__ = (UniqueConstraint("make", "model", name="uq_photo_make_model"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    make: Mapped[str] = mapped_column(String(80))
+    model: Mapped[str] = mapped_column(String(120))
+    status: Mapped[str] = mapped_column(String(10), default="none")
+    file: Mapped[str | None] = mapped_column(String(300))       # "File:Tata Nexon EV 2023.jpg"
+    image_url: Mapped[str | None] = mapped_column(Text)          # resized thumbnail to show
+    page_url: Mapped[str | None] = mapped_column(Text)           # Commons description page
+    author: Mapped[str | None] = mapped_column(String(300))
+    license: Mapped[str | None] = mapped_column(String(80))
+    license_url: Mapped[str | None] = mapped_column(Text)
+    chosen_by: Mapped[str] = mapped_column(String(10), default="search")  # search | curated
+    checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

@@ -14,7 +14,7 @@ from .base import HP_TO_KW, SPEC_FIELDS, VehicleSpec, lakh_to_inr, ps_to_kw
 DEFAULT_DIR = Path(__file__).resolve().parents[2] / "data" / "india"
 LAST_VERIFIED = "2026-11-10"
 
-_MODEL_ONLY = {"make", "model", "variants", "source_url", "other_sources", "note"}
+_MODEL_ONLY = {"make", "model", "variants", "source_url", "other_sources", "note", "photo_file"}
 
 
 class IndiaCuratedSource:
