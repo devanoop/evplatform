@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     ingest_sources: str = "india_curated,oem_pages"
 
     # Polite crawling settings for any source that fetches web pages.
-    http_user_agent: str = "EVPlatformSpecsBot/0.1 (+https://example.com/bot)"
+    http_user_agent: str = "KilowiseBot/0.1 (+https://evplatform-production.up.railway.app/#/about)"
     http_timeout_seconds: float = 30.0
     crawl_delay_seconds: float = 5.0  # minimum gap between requests to the same host
 
@@ -31,6 +31,12 @@ class Settings(BaseSettings):
         "https://raw.githubusercontent.com/KilowattApp/open-ev-data/master/data/ev-data.json"
     )
     wikidata_sparql_url: str = "https://query.wikidata.org/sparql"
+
+    # Car photos from Wikimedia Commons (freely licensed, credited in the app). The ingest job
+    # refreshes them after the spec sources; turn off with ENABLE_PHOTOS=false.
+    enable_photos: bool = True
+    commons_api_url: str = "https://commons.wikimedia.org/w/api.php"
+    photo_refresh_days: int = 30
 
     # OEM page extraction uses Claude to turn a spec page into structured data.
     # Leave ANTHROPIC_API_KEY unset to skip that source.

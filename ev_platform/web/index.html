@@ -107,6 +107,11 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;margin:0}
 .card:focus-within{border-color:var(--accent)}
 .card .art{height:132px;display:grid;place-items:center;position:relative}
 .card .art svg{width:82%;max-width:250px}
+.art{overflow:hidden}
+.art img.photo,.head-art img.photo{width:100%;height:100%;object-fit:cover;display:block}
+.card .art img.photo{position:absolute;inset:0}
+.credit{font-size:11px;color:var(--faint);margin-top:8px;line-height:1.4}
+.credit a{color:var(--muted)}
 .card .body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
 .card .make{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .card h3{font-size:20px;font-weight:700}
@@ -119,7 +124,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;margin:0}
 .card .cmp{position:absolute;top:12px;right:12px;z-index:2}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
 .pill.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.pill.badge{position:absolute;top:12px;left:12px;background:var(--gold-soft);color:var(--gold);border-color:transparent}
+.pill.badge{position:absolute;top:12px;left:12px;z-index:2;background:var(--gold-soft);color:var(--gold);border-color:transparent}
 .empty{text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
 .skeleton{height:300px;border-radius:var(--radius);background:linear-gradient(90deg,var(--surface) 0%,var(--surface-2) 50%,var(--surface) 100%);background-size:200% 100%;animation:sh 1.4s infinite}
 @keyframes sh{to{background-position:-200% 0}}
@@ -158,6 +163,22 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;margin:0}
 .tip{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:99px;border:1px solid var(--line-strong);font-size:10px;color:var(--muted);cursor:help;font-weight:700}
 .sources a{color:var(--accent);text-decoration:none;font-weight:500}
 .sources a:hover{text-decoration:underline}
+details.srcbox{margin-top:14px;font-size:12px;color:var(--muted)}
+details.srcbox summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;color:var(--faint);font-weight:500}
+details.srcbox summary::-webkit-details-marker{display:none}
+details.srcbox summary::before{content:"ⓘ"}
+details.srcbox[open] summary{color:var(--muted)}
+details.srcbox p{margin:8px 0 0;line-height:1.5}
+.about h2{font-size:clamp(26px,3.4vw,36px);margin:28px 0 10px}
+.about h3{font-size:18px;margin:28px 0 8px}
+.about p,.about li{color:var(--muted);max-width:70ch}
+.about table{border-collapse:collapse;font-size:14px;margin-top:8px}
+.about td,.about th{padding:8px 16px 8px 0;border-bottom:1px solid var(--line);text-align:left}
+.credits{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:12px}
+.credits figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
+.credits img{width:100%;height:120px;object-fit:cover;display:block}
+.credits figcaption{padding:10px 12px;font-size:12px;color:var(--muted)}
+.credits figcaption a{color:var(--muted)}
 
 /* Calculator */
 .calc label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:14px 0 8px}
@@ -181,7 +202,8 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .cmp-table tbody th{color:var(--muted);font-weight:500;min-width:150px;position:sticky;left:0;background:var(--bg);z-index:1}
 .cmp-table tr.grp th{color:var(--text);font:600 13px var(--display);text-transform:uppercase;letter-spacing:.08em;padding-top:24px;border-bottom:none}
 .cmp-table tr.grp td{border-bottom:none}
-.cmp-table .head-art{height:70px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px}
+.cmp-table .head-art{height:70px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px;overflow:hidden;position:relative}
+.cmp-table .head-art img.photo{position:absolute;inset:0}
 .cmp-table .head-art svg{width:80%}
 .best{color:var(--accent);font-weight:700}
 .best::after{content:"Best";margin-left:8px;font:600 10px var(--body);letter-spacing:.06em;text-transform:uppercase;background:var(--accent-soft);padding:2px 7px;border-radius:99px;vertical-align:2px}
@@ -280,9 +302,8 @@ footer p{margin:6px 0}
       <p>No ads. No spam calls. We never ask for your phone number.</p>
     </div>
     <div>
-      <p><b style="color:var(--text)">How we get the numbers</b></p>
-      <p>Specs come from public sources, linked on every car. Real-world range and running costs are our estimates, explained where they appear. Prices are ex-showroom and change often, so confirm with the dealer.</p>
-      <p><a href="docs">API</a></p>
+      <p>Real-world range and running costs are our estimates. Prices are ex-showroom and change often, so confirm with the dealer.</p>
+      <p><a href="#/about">About our data and photos</a> · <a href="docs">API</a></p>
     </div>
   </div>
 </footer>
@@ -351,7 +372,7 @@ function chargeMinutes(v){
 const SEVEN = b => /3-row|mpv/i.test(b || "");
 function seats(b){ return SEVEN(b) ? "6–7 seats" : /roadster|coupe$/i.test(b || "") ? "2–4 seats" : "5 seats"; }
 
-/* ---------- car art (original line drawings, no photos) ---------- */
+/* ---------- car art: a freely licensed photo when we have one, else an original drawing ---------- */
 const SHAPES = {
   hatch:"M16 64C16 54 24 49 36 47L66 43C82 27 98 21 130 21C160 21 176 25 192 37L207 50C215 52 221 57 221 63V68H16Z",
   sedan:"M10 63C10 55 18 51 30 49L70 44C85 30 101 25 128 25C150 25 167 31 184 44L214 48C226 50 232 56 232 63V68H10Z",
@@ -379,6 +400,27 @@ function shapeFor(b){
 }
 function hue(s){ let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
 function artBg(make){ const h = hue(make); return `background:radial-gradient(120% 90% at 30% 10%,hsl(${h} 45% 50% / .28),transparent 60%),radial-gradient(90% 80% at 90% 100%,hsl(${(h+50)%360} 50% 45% / .22),transparent 60%),var(--surface-2)`; }
+let PHOTOS = new Map(); // model key -> photo with credit (from GET /photos)
+const photoFor = (make, model) => PHOTOS.get(slugify(`${make} ${model}`));
+function creditText(p){ return `Photo: ${p.author}, ${p.license}, via Wikimedia Commons`; }
+function creditHTML(p){
+  const lic = p.license_url ? `<a href="${esc(p.license_url)}" target="_blank" rel="noopener license">${esc(p.license)}</a>` : esc(p.license);
+  return `Photo: <a href="${esc(p.page_url)}" target="_blank" rel="noopener">${esc(p.author)}</a>, ${lic}, via Wikimedia Commons`;
+}
+// The photo, or the drawing if there's no photo (or it fails to load).
+function artHTML(make, model, body){
+  const p = photoFor(make, model);
+  if (!p) return carSVG(body, make);
+  return `<img class="photo" src="${esc(p.image_url)}" alt="${esc(make)} ${esc(model)}" title="${esc(creditText(p))}" loading="lazy" decoding="async" data-fallback="${esc(body || "")}|${esc(make)}">`;
+}
+document.addEventListener("error", e => {
+  const img = e.target;
+  if (img.tagName === "IMG" && img.closest(".credits figure")) img.closest("figure").remove();
+  if (img.tagName === "IMG" && img.dataset.fallback != null){
+    const [body, make] = img.dataset.fallback.split("|");
+    img.outerHTML = carSVG(body, make);
+  }
+}, true);
 function carSVG(body, make){
   const k = shapeFor(body), h = hue(make), id = "g" + Math.random().toString(36).slice(2, 8);
   return `<svg viewBox="0 0 242 88" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${h} 30% 78%)"/><stop offset="1" stop-color="hsl(${h} 25% 46%)"/></linearGradient></defs>
@@ -415,6 +457,10 @@ async function load(){
     return m;
   });
   for (const m of MODELS) BY_KEY.set(m.key, m);
+  try {
+    const photos = await (await fetch("photos")).json();
+    if (Array.isArray(photos)) for (const p of photos) if (p.image_url) PHOTOS.set(slugify(`${p.make} ${p.model}`), p);
+  } catch {} // photos are optional; drawings cover every car
   // "Best value": most real-world km per lakh, among cars under ₹25 L
   const val = MODELS.filter(m => m.real && m.pmin && m.pmin < 25e5).sort((a, b) => b.real / b.pmin - a.real / a.pmin).slice(0, 3);
   val.forEach(m => m.badge = "Best value");
@@ -456,6 +502,7 @@ function route(){
   if (parts[0] === "car") renderCar(parts[1], parts[2]);
   else if (parts[0] === "compare") renderCompare(parts[1] ? decodeURIComponent(parts[1]).split(",") : picked);
   else if (parts[0] === "match") renderMatch();
+  else if (parts[0] === "about") renderAbout();
   else renderHome(new URLSearchParams(qs || ""));
   renderTray();
 }
@@ -550,7 +597,7 @@ function cardHTML(m){
   const v = m.vers[0], on = m.vers.some(x => picked.includes(x.slug));
   const cpk = isFinite(m.cpk) ? `₹${m.cpk.toFixed(2)}` : "–";
   return `<article class="card">
-    <div class="art" style="${artBg(m.make)}">${m.badge ? `<span class="pill badge">★ ${m.badge}</span>` : ""}${carSVG(m.body, m.make)}</div>
+    <div class="art" style="${artBg(m.make)}">${m.badge ? `<span class="pill badge">★ ${m.badge}</span>` : ""}${artHTML(m.make, m.model, m.body)}</div>
     <button class="pill cmp ${on ? "on" : ""}" data-pick="${esc(v.slug)}" aria-pressed="${on}" title="Add ${esc(m.model)} ${esc(v.variant)} to compare">${on ? "✓ Comparing" : "+ Compare"}</button>
     <div class="body">
       <div><div class="make">${esc(m.make)}</div><h3><a class="stretch" href="#/car/${m.key}">${esc(m.model)}</a></h3></div>
@@ -594,7 +641,8 @@ function renderCar(key, slug){
         <a class="btn ghost" href="#/match">Is it right for me?</a>
       </div>
     </div>
-    <div class="art" style="${artBg(m.make)}">${carSVG(m.body, m.make)}</div>
+    <div><div class="art" style="${artBg(m.make)}">${artHTML(m.make, m.model, m.body)}</div>
+      ${photoFor(m.make, m.model) ? `<div class="credit">${creditHTML(photoFor(m.make, m.model))}</div>` : ""}</div>
   </section>
 
   <section class="tiles">
@@ -635,7 +683,8 @@ function renderCar(key, slug){
         ${row("Body", esc(cap(v.body_type || "")))}
       </table>
       ${notes.length ? `<div class="note"><b>Worth knowing:</b> ${esc(notes.join(" "))}</div>` : ""}
-      <p class="info sources" style="margin-top:14px">Sources: <span id="srcs">${sourcesHTML(v)}</span>. Blank specs weren't stated by the source.${v.extra?.last_verified ? " Checked " + esc(v.extra.last_verified) + "." : ""}</p>
+      <details class="srcbox sources"><summary>Where these numbers come from</summary>
+        <p>Specs: <span id="srcs">${sourcesHTML(v)}</span>.${v.extra?.last_verified ? " Last checked " + esc(v.extra.last_verified) + "." : ""} A blank means the source didn't state it. Real-world range and costs are <a href="#/about">our estimates</a>.</p></details>
     </div>
   </section>`;
   if (cpk) bindCalc(v);
@@ -715,7 +764,7 @@ function renderCompare(slugs){
     <button class="btn sm" id="share">Copy link</button></div>
   <div class="cmp-wrap fade-in"><table class="cmp-table">
     <thead><tr><th></th>${vs.map(v => { const k = slugify(v.make + " " + v.model); return `<th>
-      <a href="#/car/${k}/${esc(v.slug)}" style="text-decoration:none"><div class="head-art" style="${artBg(v.make)}">${carSVG(v.body_type, v.make)}</div>
+      <a href="#/car/${k}/${esc(v.slug)}" style="text-decoration:none"><div class="head-art" style="${artBg(v.make)}">${artHTML(v.make, v.model, v.body_type)}</div>
       <div class="muted" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">${esc(v.make)}</div>
       <div style="font:700 17px var(--display)">${esc(v.model)}</div><div class="muted" style="font-weight:500">${esc(v.variant)}</div></a>
       <button class="linkbtn" data-unpick="${esc(v.slug)}" style="padding-left:0;margin-top:6px">Remove</button></th>`; }).join("")}
@@ -844,6 +893,28 @@ function resultHTML(r, i){
       <div class="acts"><a class="btn sm primary" href="#/car/${m.key}/${esc(v.slug)}">See details</a>
         <button class="btn sm" data-pick="${esc(v.slug)}">${picked.includes(v.slug) ? "✓ Comparing" : "+ Compare"}</button></div>
     </div></article>`;
+}
+
+/* ---------- about our data ---------- */
+function renderAbout(){
+  document.title = "About our data · Kilowise";
+  const photos = [...PHOTOS.values()];
+  const std = Object.entries(REAL).filter(([k]) => k !== "EPA").sort((a, b) => a[1] - b[1]);
+  app.innerHTML = `<div class="about fade-in">
+    <a class="back" href="#/">← All cars</a>
+    <h2>About our data</h2>
+    <p>Kilowise covers every electric car on sale in India. We take specs and prices from public sources (carmaker announcements and Indian motoring sites), keep a link to the source of every number, and check them by hand. Each car page lists its sources under “Where these numbers come from”. If two sources disagree and neither names a test, we leave the figure blank rather than guess.</p>
+    <h3>Real-world range</h3>
+    <p>Official range depends on which test was used, and Indian city-cycle tests are optimistic. We multiply the claimed range by a factor for its test to estimate mixed driving with the AC on:</p>
+    <table><tr><th>Test</th><th>Factor</th></tr>${std.map(([k, f]) => `<tr><td>${esc({claimed: "No test named", "claimed real-world": "Maker's real-world figure", C75: "Tata C75"}[k] || k)}</td><td>× ${f.toFixed(2)}</td></tr>`).join("")}</table>
+    <h3>Running cost</h3>
+    <p>Energy per km = 92% of the battery (the usable part) ÷ real-world range, plus 10% lost while charging, at your electricity price (₹${prefs.tariff}/kWh unless you change it on a car page). Petrol comparisons use ₹${prefs.petrol}/litre at ${prefs.kmpl} km/l.</p>
+    <h3>No ads, no lead selling</h3>
+    <p>No brand pays to appear or rank higher, and we never ask for your phone number.</p>
+    <h3>Photos</h3>
+    <p>Car photos come from Wikimedia Commons and are used under their free licences (CC0, public domain, CC BY or CC BY-SA), credited below and on each car page. Cars without a suitable free photo are shown as our own drawings.${photos.length ? "" : " No photos have been loaded yet."}</p>
+    ${photos.length ? `<div class="credits">${photos.map(p => `<figure><img src="${esc(p.image_url)}" alt="${esc(p.make)} ${esc(p.model)}" loading="lazy"><figcaption><b style="color:var(--text)">${esc(p.make)} ${esc(p.model)}</b><br>${creditHTML(p)}</figcaption></figure>`).join("")}</div>` : ""}
+  </div>`;
 }
 
 /* ---------- global events ---------- */

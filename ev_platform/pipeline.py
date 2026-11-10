@@ -137,3 +137,19 @@ def run_ingest(db: Session, sources: list[str] | None = None, instances: dict | 
         db.commit()
     log.info("ingest finished: %s", [(r.source, r.status, r.stats) for r in runs])
     return runs
+
+
+def run_full_update(db: Session, sources: list[str] | None = None) -> list[IngestRun]:
+    """Ingest specs, then refresh car photos (unless ENABLE_PHOTOS=false or only some sources ran).
+
+    A photo failure is logged, never fatal: specs matter more than pictures."""
+    runs = run_ingest(db, sources)
+    if get_settings().enable_photos and not sources:
+        try:
+            from .photos import refresh_photos
+
+            refresh_photos(db)
+        except Exception:
+            db.rollback()
+            log.exception("photo refresh failed")
+    return runs

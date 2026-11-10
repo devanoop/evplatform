@@ -12,3 +12,8 @@ Rules for editing:
   The loader converts to kW and rupees.
 * `range_standard`: MIDC P1, MIDC P1+P2, MIDC, ARAI, WLTP, CLTC, C75 (Tata's real-world cycle),
   or "claimed" when the source names none.
+
+Photos: the app shows one freely licensed Wikimedia Commons photo per model, found by search
+after each ingest. To pick the photo yourself, add `photo_file: "File:Exact name on Commons.jpg"`
+to the model; to show the drawing instead, add `photo_file: none`. Check the current picks at
+`GET /photos?all=true`. Only CC0, public-domain, CC BY and CC BY-SA files are used.

@@ -17,8 +17,8 @@ from sqlalchemy.orm import Session, selectinload
 
 from .config import get_settings
 from .db import get_db, session_scope
-from .models import IngestRun, SpecRecord, Vehicle
-from .pipeline import run_ingest
+from .models import IngestRun, ModelPhoto, SpecRecord, Vehicle
+from .pipeline import run_full_update
 from .sources import REGISTRY
 
 WEB_DIR = Path(__file__).parent / "web"
@@ -104,7 +104,7 @@ def _scheduler_loop(interval_hours: float) -> None:
         if last is None or (now - last).total_seconds() >= interval_hours * 3600:
             try:
                 with session_scope() as db:
-                    run_ingest(db)
+                    run_full_update(db)
             except Exception:
                 log.exception("scheduled ingest failed")
         _stop.wait(timeout=600)
@@ -222,6 +222,31 @@ def compare(slugs: str = Query(..., description="Comma-separated slugs, up to 4"
     return [found[s] for s in wanted]
 
 
+class PhotoOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    make: str
+    model: str
+    status: str
+    image_url: str | None
+    page_url: str | None
+    author: str | None
+    license: str | None
+    license_url: str | None
+    file: str | None
+    chosen_by: str
+
+
+@app.get("/photos", response_model=list[PhotoOut])
+def photos(all: bool = Query(False, description="Include models with no usable photo, for review"),
+           db: Session = Depends(get_db)):
+    """One freely licensed photo per model, with the credit the app must show next to it."""
+    stmt = select(ModelPhoto).order_by(ModelPhoto.make, ModelPhoto.model)
+    if not all:
+        stmt = stmt.where(ModelPhoto.status == "ok")
+    return db.scalars(stmt).all()
+
+
 @app.get("/makes")
 def makes(market: str | None = None, db: Session = Depends(get_db)):
     stmt = (select(Vehicle.make, func.count())
@@ -252,7 +277,7 @@ def trigger_ingest(background: BackgroundTasks, source: str | None = None):
 
     def _job():
         with session_scope() as db:
-            run_ingest(db, [source] if source else None)
+            run_full_update(db, [source] if source else None)
 
     background.add_task(_job)
     return {"queued": source or "all"}

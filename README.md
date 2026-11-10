@@ -49,6 +49,13 @@ Open the service's main URL (`/`) for Kilowise:
   calculator (km/day, electricity and petrol price) with 5-year fuel savings. Every source is linked.
 * **Compare** up to 4 versions; the best figure in each row is marked and the link can be shared.
 
+* **Photos**: one Wikimedia Commons photo per model under a free licence (CC0, public domain,
+  CC BY, CC BY-SA), credited on the car page and on the About page; cars without one keep the
+  original line drawing. `ev_platform/photos.py` finds them after each ingest (or run
+  `python -m ev_platform.cli photos`), and `photo_file` in the YAML pins or blocks a photo.
+* **Sources** sit behind "Where these numbers come from" on each car page; `#/about` explains
+  the data and the estimates.
+
 It is one static page (`ev_platform/web/index.html`) that calls the API below, so it deploys with
 the API and needs no build step. Real-world range applies a factor per range test (MIDC P1 0.68 up
 to Tata C75 0.95, in `REAL`), and running cost assumes 92% usable battery and 10% charging loss.
@@ -60,6 +67,7 @@ to Tata C75 0.95, in `REAL`), and running cost assumes 92% usable battery and 10
 | `GET /vehicles` | filter by `market` (IN, GLOBAL), `make`, `q`, `body_type`, `min_price_inr`, `max_price_inr`, `min_range_km`, `min_battery_kwh`; `sort` = price, -price, range, -range, battery, -battery, name; `limit`/`offset` |
 | `GET /vehicles/{slug}` | one variant with per-source records |
 | `GET /compare?slugs=a,b,c` | up to 4 side by side |
+| `GET /photos[?all=true]` | one credited photo per model (`all` includes models with none, for review) |
 | `GET /makes`, `GET /sources`, `GET /ingest/runs` | browsing and pipeline status |
 | `POST /admin/ingest[?source=x]` | run ingestion now; needs `Authorization: Bearer $ADMIN_TOKEN` |
 | `GET /docs` | interactive OpenAPI docs |
