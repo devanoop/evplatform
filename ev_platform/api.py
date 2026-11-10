@@ -3,12 +3,14 @@
 import logging
 import secrets
 import threading
+from pathlib import Path
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Literal
 
 from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import func, or_, select, text
 from sqlalchemy.orm import Session, selectinload
@@ -18,6 +20,8 @@ from .db import get_db, session_scope
 from .models import IngestRun, SpecRecord, Vehicle
 from .pipeline import run_ingest
 from .sources import REGISTRY
+
+WEB_DIR = Path(__file__).parent / "web"
 
 log = logging.getLogger(__name__)
 
@@ -132,6 +136,12 @@ def require_admin(authorization: str | None = Header(default=None)) -> None:
         raise HTTPException(404, "admin endpoints disabled; set ADMIN_TOKEN")
     if not authorization or not secrets.compare_digest(authorization, f"Bearer {token}"):
         raise HTTPException(401, "bad token")
+
+
+@app.get("/", include_in_schema=False)
+def web_app():
+    """The browse/compare web app. Everything else on this server is the JSON API."""
+    return FileResponse(WEB_DIR / "index.html")
 
 
 @app.get("/health")
