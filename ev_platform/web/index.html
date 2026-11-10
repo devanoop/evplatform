@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EV Finder India</title>
+<meta name="description" content="Every electric car on sale in India: specs, range, charging and prices, with sources.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%230f9d58' d='M13 2 4 14h7l-1 8 9-12h-7z'/></svg>">
+<style>
+:root{
+  --bg:#f6f7f9; --card:#fff; --text:#16181d; --muted:#5f6672; --line:#e3e6eb;
+  --accent:#0f8a4f; --accent-soft:#e6f4ec; --warn:#9a6700; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0f1115; --card:#181b21; --text:#e9ecf1; --muted:#9aa3b2; --line:#2a2f38;
+        --accent:#3cc47f; --accent-soft:#16301f; --warn:#e3b341; --shadow:none}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.top{display:flex;align-items:center;gap:12px;padding:12px 0}
+.logo{font-weight:700;font-size:18px;display:flex;align-items:center;gap:6px}
+.logo svg{width:20px;height:20px;fill:var(--accent)}
+.top .count{color:var(--muted);font-size:13px;margin-left:auto}
+.filters{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:8px;padding:0 0 12px}
+.filters label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px}
+input,select,button{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+button{cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+main{padding:16px 0 120px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+.card h3{margin:0;font-size:16px}
+.card .make{color:var(--muted);font-size:13px}
+.price{font-weight:650}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-right:4px}
+.versions{display:flex;flex-direction:column;gap:6px}
+.ver{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--bg)}
+.ver:hover{border-color:var(--accent)}
+.ver .nm{font-size:13px;font-weight:600}
+.ver .sp{font-size:12px;color:var(--muted)}
+.ver input{width:18px;height:18px;margin:0;accent-color:var(--accent)}
+.empty{color:var(--muted);text-align:center;padding:40px}
+.cmpbar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 0;display:none;z-index:6}
+.cmpbar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;background:var(--bg)}
+dialog{border:none;border-radius:14px;padding:0;max-width:min(920px,calc(100vw - 32px));width:100%;background:var(--card);color:var(--text)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dlg{padding:18px;max-height:85vh;overflow:auto}
+.dlg h2{margin:0 0 2px}
+.close{float:right}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;width:38%}
+.cmp th{width:auto;min-width:130px}
+.note{background:var(--accent-soft);border-radius:8px;padding:10px;font-size:13px;margin:10px 0}
+.src{font-size:13px;color:var(--muted)}
+.muted{color:var(--muted)}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:24px 16px}
+@media (max-width:820px){header{position:static}.filters{grid-template-columns:1fr 1fr}.filters .q{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>EV Finder India</div>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="filters">
+      <label class="q">Search<input id="q" type="search" placeholder="Nexon, Mahindra, 7 seater MPV..."></label>
+      <label>Brand<select id="make"><option value="">All brands</option></select></label>
+      <label>Body type<select id="body"><option value="">All types</option></select></label>
+      <label>Max price<select id="maxp">
+        <option value="">Any</option><option value="1000000">Up to Rs 10 L</option><option value="1500000">Up to Rs 15 L</option>
+        <option value="2000000">Up to Rs 20 L</option><option value="2500000">Up to Rs 25 L</option><option value="5000000">Up to Rs 50 L</option>
+        <option value="10000000">Up to Rs 1 Cr</option></select></label>
+      <label>Min range<select id="minr">
+        <option value="">Any</option><option value="250">250 km+</option><option value="350">350 km+</option>
+        <option value="450">450 km+</option><option value="550">550 km+</option><option value="650">650 km+</option></select></label>
+      <label>Sort<select id="sort">
+        <option value="price">Price: low to high</option><option value="-price">Price: high to low</option>
+        <option value="-range">Range: longest</option><option value="-battery">Battery: largest</option><option value="name">Name</option></select></label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>No cars match these filters.</div>
+</main>
+
+<div class="cmpbar" id="cmpbar"><div class="wrap">
+  <strong>Compare:</strong><span id="cmpchips"></span>
+  <button class="primary" id="cmpgo">Compare</button><button id="cmpclear">Clear</button>
+</div></div>
+
+<dialog id="dlg"><div class="dlg" id="dlgbody"></div></dialog>
+
+<footer>Specs compiled from public sources, linked on every car. Prices are ex-showroom and change often; check with the dealer.</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let ALL = [];
+const picked = new Map(); // slug -> label
+
+function money(x){
+  if (x == null) return "";
+  return x >= 1e7 ? `Rs ${(x/1e7).toFixed(2)} Cr` : `Rs ${(x/1e5).toFixed(2)} L`;
+}
+function priceRange(lo, hi){
+  if (lo == null) return "Price not listed";
+  return hi && hi !== lo ? `${money(lo)} – ${money(hi)}` : money(lo);
+}
+const num = (x, u) => x == null ? "" : `${+x.toFixed(1)} ${u}`;
+const ps = kw => kw == null ? "" : `${Math.round(kw)} kW (${Math.round(kw/0.7355)} PS)`;
+
+async function load(){
+  const r = await fetch("vehicles?limit=200");
+  const d = await r.json();
+  ALL = d.items;
+  // the API caps a page at 200; fetch more pages if the catalogue grows
+  for (let off = 200; off < d.total; off += 200){
+    const more = await (await fetch(`vehicles?limit=200&offset=${off}`)).json();
+    ALL = ALL.concat(more.items);
+  }
+  const makes = [...new Set(ALL.map(v => v.make))].sort();
+  const bodies = [...new Set(ALL.map(v => v.body_type).filter(Boolean))].sort();
+  $("#make").insertAdjacentHTML("beforeend", makes.map(m => `<option>${esc(m)}</option>`).join(""));
+  $("#body").insertAdjacentHTML("beforeend", bodies.map(m => `<option>${esc(m)}</option>`).join(""));
+  readHash(); render();
+}
+
+function filters(){
+  return {q: $("#q").value.trim().toLowerCase(), make: $("#make").value, body: $("#body").value,
+          maxp: +$("#maxp").value || null, minr: +$("#minr").value || null, sort: $("#sort").value};
+}
+function writeHash(){
+  const f = filters(), p = new URLSearchParams();
+  for (const [k, v] of Object.entries(f)) if (v && !(k === "sort" && v === "price")) p.set(k, v);
+  history.replaceState(null, "", p.toString() ? "#" + p : location.pathname);
+}
+function readHash(){
+  const p = new URLSearchParams(location.hash.slice(1));
+  for (const k of ["q","make","body","maxp","minr","sort"]) if (p.get(k)) $("#"+k).value = p.get(k);
+}
+
+function render(){
+  const f = filters();
+  const match = v =>
+    (!f.q || `${v.make} ${v.model} ${v.variant} ${v.body_type ?? ""}`.toLowerCase().includes(f.q)) &&
+    (!f.make || v.make === f.make) && (!f.body || v.body_type === f.body) &&
+    (!f.maxp || (v.price_min_inr != null && v.price_min_inr <= f.maxp)) &&
+    (!f.minr || (v.range_km != null && v.range_km >= f.minr));
+  const rows = ALL.filter(match);
+
+  // group versions under their model
+  const groups = new Map();
+  for (const v of rows){
+    const k = v.make + "|" + v.model;
+    if (!groups.has(k)) groups.set(k, {make: v.make, model: v.model, body: v.body_type, vers: []});
+    groups.get(k).vers.push(v);
+  }
+  for (const x of groups.values()) x.vers.sort((a, b) => (a.battery_kwh ?? 0) - (b.battery_kwh ?? 0) || (a.price_min_inr ?? 0) - (b.price_min_inr ?? 0));
+  const g = [...groups.values()].map(x => ({...x,
+    pmin: Math.min(...x.vers.map(v => v.price_min_inr ?? Infinity)),
+    pmax: Math.max(...x.vers.map(v => v.price_max_inr ?? v.price_min_inr ?? 0)),
+    rmax: Math.max(...x.vers.map(v => v.range_km ?? 0)),
+    bmax: Math.max(...x.vers.map(v => v.battery_kwh ?? 0))}));
+  const by = {price: (a,b) => a.pmin - b.pmin, "-price": (a,b) => b.pmin - a.pmin, "-range": (a,b) => b.rmax - a.rmax,
+              "-battery": (a,b) => b.bmax - a.bmax, name: (a,b) => (a.make+a.model).localeCompare(b.make+b.model)};
+  g.sort(by[f.sort] || by.price);
+
+  $("#count").textContent = `${g.length} models · ${rows.length} versions`;
+  $("#empty").hidden = g.length > 0;
+  $("#grid").innerHTML = g.map(x => `
+    <article class="card">
+      <div><div class="make">${esc(x.make)}</div><h3>${esc(x.model)}</h3></div>
+      <div class="price">${priceRange(isFinite(x.pmin) ? x.pmin : null, x.pmax || null)}</div>
+      <div>${x.body ? `<span class="tag">${esc(x.body)}</span>` : ""}${x.rmax ? `<span class="tag">up to ${x.rmax} km</span>` : ""}</div>
+      <div class="versions">${x.vers.map(v => `
+        <div class="ver" data-slug="${esc(v.slug)}">
+          <div><div class="nm">${esc(v.variant || v.model)}</div>
+            <div class="sp">${[num(v.battery_kwh,"kWh"), v.range_km ? `${v.range_km} km${v.range_standard ? " " + esc(v.range_standard) : ""}` : "", v.power_kw ? Math.round(v.power_kw)+" kW" : ""].filter(Boolean).join(" · ")}</div></div>
+          <span class="sp">Details</span>
+          <input type="checkbox" title="Add to compare" aria-label="Compare ${esc(v.model)} ${esc(v.variant)}" data-cmp="${esc(v.slug)}" ${picked.has(v.slug) ? "checked" : ""}>
+        </div>`).join("")}
+      </div>
+    </article>`).join("");
+  writeHash();
+}
+
+const ROWS = [
+  ["Price", v => priceRange(v.price_min_inr, v.price_max_inr)],
+  ["Body type", v => esc(v.body_type)],
+  ["Battery", v => num(v.battery_kwh, "kWh") + (v.battery_chemistry ? ` (${esc(v.battery_chemistry)})` : "")],
+  ["Claimed range", v => v.range_km ? `${v.range_km} km` + (v.range_standard ? ` <span class="muted">(${esc(v.range_standard)})</span>` : "") : ""],
+  ["Power", v => ps(v.power_kw)],
+  ["Torque", v => num(v.torque_nm, "Nm")],
+  ["Drive", v => esc(v.drivetrain)],
+  ["DC fast charging", v => [num(v.dc_charge_max_kw, "kW"), esc(v.dc_charge_time_note)].filter(Boolean).join(", ")],
+  ["AC charging", v => num(v.ac_charge_max_kw, "kW")],
+];
+
+async function showDetail(slug){
+  const v = await (await fetch("vehicles/" + encodeURIComponent(slug))).json();
+  const src = v.records.map(r => `<a href="${esc(r.source_url)}" target="_blank" rel="noopener">${esc(new URL(r.source_url).hostname)}</a>`);
+  for (const u of v.extra.other_sources || []) src.push(`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname)}</a>`);
+  $("#dlgbody").innerHTML = `
+    <button class="close" onclick="dlg.close()">Close</button>
+    <div class="muted">${esc(v.make)}</div><h2>${esc(v.model)} <span class="muted">${esc(v.variant)}</span></h2>
+    <table>${ROWS.map(([k, f]) => { const val = f(v); return val ? `<tr><th>${k}</th><td>${val}</td></tr>` : ""; }).join("")}</table>
+    ${v.price_note || v.extra.note ? `<div class="note">${esc([v.price_note, v.extra.note].filter(Boolean).join(" "))}</div>` : ""}
+    <p class="src">Sources: ${src.join(", ")}. Last checked ${esc(v.extra.last_verified || "")}. Blank specs weren't stated by the source.</p>`;
+  $("#dlg").showModal();
+}
+
+async function showCompare(){
+  const slugs = [...picked.keys()];
+  const vs = await (await fetch("compare?slugs=" + slugs.map(encodeURIComponent).join(","))).json();
+  $("#dlgbody").innerHTML = `
+    <button class="close" onclick="dlg.close()">Close</button><h2>Compare</h2>
+    <div style="overflow-x:auto"><table class="cmp">
+      <tr><th></th>${vs.map(v => `<th><span class="muted">${esc(v.make)}</span><br><strong>${esc(v.model)}</strong><br>${esc(v.variant)}</th>`).join("")}</tr>
+      ${ROWS.map(([k, f]) => `<tr><th>${k}</th>${vs.map(v => `<td>${f(v) || '<span class="muted">–</span>'}</td>`).join("")}</tr>`).join("")}
+    </table></div>
+    <p class="src">Ranges measured on different tests (MIDC, ARAI, WLTP) aren't directly comparable.</p>`;
+  $("#dlg").showModal();
+}
+
+function updateCmpBar(){
+  $("#cmpbar").style.display = picked.size ? "block" : "none";
+  $("#cmpchips").innerHTML = [...picked.values()].map(l => `<span class="chip">${esc(l)}</span>`).join(" ");
+  $("#cmpgo").disabled = picked.size < 2;
+}
+
+$("#grid").addEventListener("click", e => {
+  const box = e.target.closest("[data-cmp]");
+  if (box){
+    const slug = box.dataset.cmp, v = ALL.find(x => x.slug === slug);
+    if (box.checked){
+      if (picked.size >= 4){ box.checked = false; $("#cmpchips").insertAdjacentHTML("beforeend", ' <span class="muted">Up to 4 cars.</span>'); return; }
+      picked.set(slug, `${v.model} ${v.variant}`);
+    } else picked.delete(slug);
+    updateCmpBar(); return;
+  }
+  const ver = e.target.closest(".ver");
+  if (ver) showDetail(ver.dataset.slug);
+});
+for (const id of ["q","make","body","maxp","minr","sort"]) $("#"+id).addEventListener("input", render);
+$("#cmpgo").onclick = showCompare;
+$("#cmpclear").onclick = () => { picked.clear(); updateCmpBar(); render(); };
+const dlg = $("#dlg");
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+load().catch(err => { $("#grid").innerHTML = `<div class="empty">Couldn't load cars: ${esc(err.message)}</div>`; });
+</script>
+</body>
+</html>

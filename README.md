@@ -34,6 +34,13 @@ Known caveats:
   91Wheels). Those pages often contradict themselves, so figures tied to a named test standard
   were preferred and conflicting ones left blank. Re-verify before publishing buyer advice.
 
+## Web app
+
+Open the service's main URL (`/`) for EV Finder India: browse every car, filter by brand, body
+type, price and range, open a car for full specs and sources, and compare up to 4 side by side.
+It is one static page (`ev_platform/web/index.html`) that calls the API below, so it deploys with
+the API and needs no build step. Filters are kept in the URL, so a filtered view can be shared.
+
 ## API
 
 | Endpoint | |
